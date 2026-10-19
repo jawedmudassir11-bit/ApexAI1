@@ -2,747 +2,1934 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-  <title>ApexAI | Unified Workspace</title>
-  <meta name="description" content="ApexAI is a responsive, local browser AI assistant for coding, math, and analysis." />
-
-  <!-- Code Highlight Styling for Code Snippets -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computer Studies Project: Internet - Online Surfing (Class VI)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kalam:wght@400;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #0a0b0d;
-      --bg-surface: #111317;
-      --bg-panel: #16191f;
-      --accent-glow: #7c4dff;
-      --accent-success: #00e676;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --text-main: #f1f3f5;
-      --text-muted: #98a2b3;
+      --ribbon-color: #e11d48;
+      --ribbon-light: #ffe4e6;
+      --border-orange: #e09145;
     }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
     body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: row; /* Desktop Base Orientation */
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg-main);
-      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      overflow-x: hidden;
     }
-
-    /* ==========================================================================
-       DESKTOP VIEWPORT LAYOUT COMPONENTS (Base Rules)
-       ========================================================================== */
-    
-    #sidebar {
-      width: 280px;
-      min-width: 280px;
-      padding: 24px 20px;
-      background: var(--bg-surface);
-      border-right: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    .font-serif-school {
+      font-family: 'Merriweather', Georgia, serif;
     }
-
-    /* Mobile Top Header - Disabled by Default on Laptop Monitors */
-    #mobileHeader {
-      display: none;
+    .font-handwriting {
+      font-family: 'Kalam', cursive;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 18px;
-      background: linear-gradient(135deg, var(--accent-glow), #448aff);
-      box-shadow: 0 4px 14px rgba(124, 77, 255, 0.3);
-    }
-
-    h1, h2, p { margin: 0; }
-    h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
-
-    .muted {
-      color: var(--text-muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .panel {
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      background: var(--bg-panel);
-    }
-
-    .status-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .status-label {
-      color: var(--accent-success);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .progress {
-      height: 4px;
-      overflow: hidden;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .progressBarInner {
-      width: 0%;
-      height: 100%;
-      background: var(--accent-glow);
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .session-clear-btn {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      background: transparent;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .session-clear-btn:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Desktop Signature Badge Container placement */
-    .desktop-signature {
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      text-align: center;
-    }
-    .signature-text {
-      font-size: 11px;
-      letter-spacing: 0.3px;
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .signature-text strong {
-      color: rgba(255, 255, 255, 0.5);
-      font-weight: 500;
-    }
-
-    /* Main Frame Area Layouts */
-    #main {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg-main);
-    }
-
-    #chatbox {
-      flex: 1;
-      width: min(100%, 840px);
-      margin: 0 auto;
-      padding: 32px 24px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      scroll-behavior: smooth;
-    }
-
-    #chatbox::-webkit-scrollbar { width: 6px; }
-    #chatbox::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
-
-    .welcome {
-      margin: auto;
-      width: 100%;
-      max-width: 520px;
-      text-align: center;
-      display: grid;
-      gap: 16px;
-    }
-
-    .welcome h2 {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #fff 40%, var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .prompts {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .prompt {
-      padding: 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      color: var(--text-main);
-      background: var(--bg-panel);
-      cursor: pointer;
-      text-align: left;
-      font-size: 13px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-    .prompt:hover {
-      border-color: rgba(124, 77, 255, 0.4);
-      background: rgba(124, 77, 255, 0.03);
-    }
-
-    /* Message Rendering Engine Layout Blocks */
-    .msg {
-      max-width: min(88%, 740px);
-      padding: 4px 0;
-      overflow-wrap: anywhere;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .user {
-      align-self: flex-end;
-      background: #1f222a;
-      padding: 12px 18px;
-      border-radius: 16px 16px 2px 16px;
-      border: 1px solid var(--border-color);
-    }
-
-    .bot {
-      align-self: flex-start;
-      width: 100%;
-    }
-
-    .error {
-      color: #ff5252;
-      border-color: rgba(255, 82, 82, 0.2);
-      background: rgba(255, 82, 82, 0.05);
-      padding: 12px 16px;
-      border-radius: 8px;
-    }
-
-    /* Code & Structural Element Hierarchies */
-    .msg pre {
-      background: #0d0e11;
-      padding: 16px;
-      border-radius: 8px;
-      overflow-x: auto;
-      border: 1px solid var(--border-color);
-      margin: 12px 0;
-    }
-    .msg code {
-      font-family: "SFMono-Regular", Consolas, monospace;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 13.5px;
-    }
-    .msg pre code { background: transparent; padding: 0; font-size: 13px; }
-    .msg ul, .msg ol { margin: 8px 0; padding-left: 24px; }
-    .msg li { margin-bottom: 4px; }
-
-    #inputArea {
-      padding: 0 24px 32px;
-      background: linear-gradient(transparent, var(--bg-main) 30%);
-    }
-
-    .input-wrap {
-      width: min(100%, 800px);
-      margin: 0 auto;
-      padding: 10px 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      background: var(--bg-surface);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .input-wrap:focus-within {
-      border-color: rgba(124, 77, 255, 0.5);
-      box-shadow: 0 0 0 1px rgba(124, 77, 255, 0.2);
-    }
-
-    #userInput {
-      flex: 1;
-      min-width: 0;
-      height: 26px;
-      max-height: 180px;
-      border: 0;
-      outline: 0;
-      color: var(--text-main);
-      background: transparent;
-      font-size: 15px;
-      resize: none;
-      font-family: inherit;
-      line-height: 26px;
-    }
-
-    #userInput::placeholder { color: rgba(255, 255, 255, 0.25); }
-
-    #sendBtn {
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
-      border: 0;
+    /* A4 Sheet Styling on Screen */
+    .a4-sheet {
+      background: #ffffff;
+      border: 3px solid var(--border-orange);
       border-radius: 6px;
-      color: #fff;
-      font-size: 12px;
-      cursor: pointer;
-      background: var(--accent-glow);
-      display: grid;
-      place-items: center;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
+      position: relative;
+      transition: all 0.25s ease;
     }
-
-    #sendBtn:disabled, #userInput:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    /* ==========================================================================
-       MOBILE RESPONSIVE COMPILING LAYER (Media Queries)
-       ========================================================================== */
-
-    @media (max-width: 768px) {
+    .a4-sheet-lined {
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        #e2e8f0 31px,
+        #e2e8f0 32px
+      );
+    }
+    /* Punch holes & ribbon visual on left edge of A4 sheet */
+    .punch-hole {
+      width: 16px;
+      height: 16px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.18);
+    }
+    /* Sketch / Outline Mode Filter for Drawings */
+    .sketch-mode svg {
+      filter: grayscale(100%) contrast(145%) brightness(1.04);
+    }
+    .sketch-mode .svg-card-bg {
+      background-color: #ffffff !important;
+      border-style: dashed !important;
+      border-color: #64748b !important;
+    }
+    /* Print Styles for actual A4 printing */
+    @media print {
       body {
-        flex-direction: column; /* Stacks layout downward instead of sideways */
+        background: #ffffff !important;
       }
-
-      /* Hide Desktop Panel Component completely */
-      #sidebar {
-        display: none;
+      .no-print {
+        display: none !important;
       }
-
-      /* Enable Fixed Mobile Header Track */
-      #mobileHeader {
-        display: flex;
-        flex-direction: column;
-        background: var(--bg-surface);
-        border-bottom: 1px solid var(--border-color);
-        padding: 12px 16px;
-        gap: 10px;
-        z-index: 100;
+      .print-only-all-pages {
+        display: block !important;
       }
-
-      .mobile-header-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      .a4-sheet {
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        page-break-after: always;
+        break-after: page;
+        min-height: 265mm;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: 2.5px solid #e09145 !important;
+        padding: 18mm 16mm 16mm 22mm !important;
       }
-
-      .mobile-status-strip {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: rgba(255, 255, 255, 0.02);
-        padding: 6px 10px;
-        border-radius: 6px;
-        border: 1px solid var(--border-color);
-      }
-
-      .mobile-progress-wrapper {
-        width: 60px;
-        height: 3px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 2px;
-        overflow: hidden;
-      }
-
-      .mobile-status-detail {
-        font-size: 11px;
-        color: var(--text-muted);
-        max-width: 50%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      /* Restyle Chat viewport limits for handheld tracking */
-      #chatbox {
-        padding: 16px 16px 24px;
-        gap: 16px;
-      }
-
-      .welcome {
-        margin: auto 0;
-      }
-
-      .welcome h2 {
-        font-size: 26px;
-      }
-
-      /* Convert regular grid block layout choices into smooth horizontal swipe chains */
-      .prompts {
-        display: flex;
-        overflow-x: auto;
-        gap: 8px;
-        margin-top: 16px;
-        padding-bottom: 4px;
-        width: 100%;
-        scroll-snap-type: x mandatory;
-      }
-      .prompts::-webkit-scrollbar { display: none; } /* Clear screen workspace lines */
-
-      .prompt {
-        flex: 0 0 auto;
-        width: 210px;
-        scroll-snap-align: start;
-        white-space: normal;
-        font-size: 12px;
-        padding: 12px;
-      }
-
-      .msg {
-        max-width: 92%;
-        font-size: 14px;
-      }
-
-      .user {
-        padding: 10px 14px;
-        border-radius: 14px 14px 2px 14px;
-      }
-
-      .msg pre { padding: 12px; margin: 8px 0; }
-      .msg code { font-size: 12.5px; }
-
-      /* Lock input array securely to mobile screen limits */
-      #inputArea {
-        padding: 8px 12px 16px 12px;
-        background: var(--bg-main);
-        border-top: 1px solid var(--border-color);
-      }
-
-      .input-wrap {
-        border-radius: 20px;
-        padding: 8px 12px;
-      }
-
-      #userInput {
-        font-size: 14px;
-        line-height: 20px;
-        height: 20px;
-        max-height: 100px;
+      .a4-sheet:last-child {
+        page-break-after: auto;
+        break-after: auto;
       }
     }
   </style>
 </head>
+<body class="min-h-screen flex flex-col">
 
-<body>
-
-  <!-- 1. LAPTOP DESKTOP SIDEBAR PANEL -->
-  <aside id="sidebar">
-    <div class="brand">
-      <div class="logo">A</div>
-      <div>
-        <h1>ApexAI</h1>
-        <p class="muted" style="font-size: 12px;">Local Compute Kernel</p>
-      </div>
+  <!-- Top Notification Toast -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 hidden no-print">
+    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700">
+      <span id="toastIcon" class="text-emerald-400 font-bold">✓</span>
+      <span id="toastMessage" class="text-sm font-medium">Saved changes!</span>
     </div>
+  </div>
 
-    <div class="panel">
-      <div class="status-container">
-        <div class="status-label d-status">INITIALIZING</div>
-      </div>
-      <div class="progress">
-        <div class="progressBarInner d-progress"></div>
-      </div>
-      <p class="muted d-detail" style="margin-top:12px; font-size:12px;">Validating hardware context.</p>
-    </div>
-
-    <div class="panel">
-      <p class="muted" style="font-size: 12px;">
-        Powered locally by WebLLM weights inside your browser sandbox. Privacy preserved natively.
-      </p>
-    </div>
-
-    <button class="session-clear-btn">Clear Session</button>
-
-    <div class="desktop-signature">
-      <p class="signature-text">Made by <strong>Mudassir Jawed</strong></p>
-    </div>
-  </aside>
-
-  <!-- 2. MOBILE TOP NAV SPECIFICATION BAR -->
-  <header id="mobileHeader">
-    <div class="mobile-header-top">
-      <div class="brand">
-        <div class="logo" style="width:28px; height:28px; font-size:14px; border-radius:5px;">A</div>
-        <h1>ApexAI</h1>
-      </div>
-      <div>
-        <p class="signature-text">Made by <strong>Mudassir Jawed</strong></p>
-      </div>
-    </div>
-
-    <div class="mobile-status-strip">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span class="status-label m-status" style="font-size:10px; letter-spacing:0.3px;">INITIALIZING</span>
-        <div class="mobile-progress-wrapper">
-          <div class="progressBarInner m-progress"></div>
+  <!-- Top Navigation Header -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-md font-extrabold text-lg">
+          🌐
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="font-bold text-base sm:text-lg tracking-tight">Internet – Online Surfing</h1>
+            <span class="text-xs font-semibold uppercase px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
+              Class VI • Final Term 2026–27
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Jibreel International School • Computer Studies Project • Due: 02/11/2026</p>
         </div>
       </div>
-      <p class="mobile-status-detail m-detail">Warming engine...</p>
-      <button class="session-clear-btn" style="padding:3px 8px; font-size:11px; border-radius:4px;">Clear</button>
+
+      <!-- Main Mode Switcher Tabs -->
+      <nav class="flex items-center gap-1.5 bg-slate-800/90 p-1 rounded-xl border border-slate-700 overflow-x-auto max-w-full" aria-label="Main Navigation">
+        <button id="tabBtnPages" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm whitespace-nowrap">
+          📄 7 Project Pages (A4)
+        </button>
+        <button id="tabBtnLab" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white hover:bg-slate-700/60 whitespace-nowrap">
+          🧪 Interactive Cyber Lab & Quiz
+        </button>
+        <button id="tabBtnGuide" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white hover:bg-slate-700/60 whitespace-nowrap">
+          🎀 Assembly & Checklist
+        </button>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2">
+        <button id="btnToggleCustomizer" type="button" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <span>✏️</span>
+          <span id="customizerBtnLabel">Edit Student Info</span>
+        </button>
+        <button id="btnPrintProject" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition flex items-center gap-1.5">
+          <span>🖨️</span>
+          <span>Print A4 Sheets</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsible Student Details & Style Customizer Drawer -->
+    <div id="customizerDrawer" class="bg-slate-800/95 border-t border-slate-700/80 px-4 sm:px-6 py-4 transition-all">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">🎓 Student & Project Customizer</span>
+            <span class="text-xs text-slate-400 hidden sm:inline">— Updates all 7 A4 project pages automatically</span>
+          </div>
+          <button id="btnResetDefaults" type="button" class="text-xs text-slate-400 hover:text-white underline">
+            Reset to Defaults
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+          <div>
+            <label for="inputSchool" class="block text-xs font-medium text-slate-300 mb-1">School Name</label>
+            <input id="inputSchool" type="text" value="Jibreel International School" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputFirstName" class="block text-xs font-medium text-slate-300 mb-1">First Name</label>
+            <input id="inputFirstName" type="text" value="Asfar" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputFullName" class="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+            <input id="inputFullName" type="text" value="Asfar Jawed" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputSection" class="block text-xs font-medium text-slate-300 mb-1">Class VI Section</label>
+            <input id="inputSection" type="text" value="A" placeholder="e.g. A, B, C" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputRollNo" class="block text-xs font-medium text-slate-300 mb-1">Roll Number</label>
+            <input id="inputRollNo" type="text" value="12" placeholder="Enter Roll No." class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputTeacher" class="block text-xs font-medium text-slate-300 mb-1">Teacher's Name</label>
+            <input id="inputTeacher" type="text" value="Mr. Tauqeer Khan" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label for="inputDate" class="block text-xs font-medium text-slate-300 mb-1">Submission Date</label>
+            <input id="inputDate" type="text" value="02/11/2026" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+          </div>
+        </div>
+
+        <!-- Visual Controls Row -->
+        <div class="mt-3 pt-3 border-t border-slate-700/70 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-4">
+            <!-- Drawing Style Toggle -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-slate-300">🎨 Image Style:</span>
+              <button id="btnStyleColor" type="button" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white">
+                Full Color (Paste / Print)
+              </button>
+              <button id="btnStyleSketch" type="button" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white">
+                Pencil Outline (Easy to Draw)
+              </button>
+            </div>
+
+            <!-- Text Font Toggle -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-slate-300">✍️ Font Style:</span>
+              <button id="btnFontClean" type="button" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white">
+                Clean Printed
+              </button>
+              <button id="btnFontHand" type="button" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white">
+                Neat Handwriting
+              </button>
+            </div>
+
+            <!-- Ruled Lines Toggle -->
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+              <input id="chkRuledLines" type="checkbox" class="rounded bg-slate-900 border-slate-600 text-blue-500 focus:ring-0" />
+              <span>Show A4 Ruled Guide Lines</span>
+            </label>
+          </div>
+
+          <!-- Ribbon Binding Color Picker -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-medium text-slate-300">🎀 Lace / Ribbon Color:</span>
+            <button type="button" data-ribbon="#e11d48" class="ribbon-swatch w-5 h-5 rounded-full bg-rose-600 ring-2 ring-white" title="Crimson Red Ribbon"></button>
+            <button type="button" data-ribbon="#2563eb" class="ribbon-swatch w-5 h-5 rounded-full bg-blue-600 opacity-70 hover:opacity-100" title="Royal Blue Ribbon"></button>
+            <button type="button" data-ribbon="#059669" class="ribbon-swatch w-5 h-5 rounded-full bg-emerald-600 opacity-70 hover:opacity-100" title="Emerald Green Ribbon"></button>
+            <button type="button" data-ribbon="#d97706" class="ribbon-swatch w-5 h-5 rounded-full bg-amber-600 opacity-70 hover:opacity-100" title="Golden Amber Ribbon"></button>
+            <button type="button" data-ribbon="#7c3aed" class="ribbon-swatch w-5 h-5 rounded-full bg-violet-600 opacity-70 hover:opacity-100" title="Purple Ribbon"></button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- 3. MAIN INTERACTIVE EXECUTION FRAMEWORK -->
-  <main id="main">
-    <section id="chatbox">
-      <div class="welcome" id="welcome">
-        <h2>Intelligent Workspace</h2>
-        <p class="muted">Run analysis, write calculations, or process complex code workflows completely on-device.</p>
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
 
-        <div class="prompts">
-          <button class="prompt">Explain quadratic equations simply</button>
-          <button class="prompt">Help me debug this JavaScript</button>
-          <button class="prompt">Make a study plan for finals</button>
-          <button class="prompt">Write a Python function for prime numbers</button>
+    <!-- ==========================================
+         VIEW 1: 7 PROJECT PAGES (A4 SHEETS)
+         ========================================== -->
+    <section id="viewPages" class="space-y-6">
+
+      <!-- Page Navigation Bar (No-Print) -->
+      <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3 no-print">
+        <div class="flex items-center gap-1.5 flex-wrap" id="pagePillsContainer">
+          <!-- Dynamically populated pills for Page 1 to Page 7 + View All -->
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="btnPrevPage" type="button" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition disabled:opacity-40">
+            ← Prev Page
+          </button>
+          <span id="pageIndicatorText" class="text-xs sm:text-sm font-bold text-slate-700 px-2">
+            All 7 Pages
+          </span>
+          <button id="btnNextPage" type="button" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition disabled:opacity-40">
+            Next Page →
+          </button>
+        </div>
+      </div>
+
+      <!-- Assembly Reminder Banner -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm text-amber-900 no-print">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📌</span>
+          <span>
+            <strong>School Assembly Rule:</strong> Use <strong>loose A4-sized file papers</strong> and tie the pages together with a <strong>colorful lace or ribbon</strong>. Do <u>not</u> use a hard cover, plastic file, or folder.
+          </span>
+        </div>
+        <button id="btnToggleHowToDraw" type="button" class="px-2.5 py-1 rounded-lg bg-amber-200/80 hover:bg-amber-300 text-amber-950 font-semibold text-xs transition">
+          💡 Show Drawing Tips
+        </button>
+      </div>
+
+      <!-- Container holding the 7 A4 Project Pages -->
+      <div id="a4PagesContainer" class="space-y-10 max-w-4xl mx-auto">
+        <!-- Rendered by JS so every student detail update reflects cleanly -->
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         VIEW 2: INTERACTIVE CYBER LAB & QUIZ
+         ========================================== -->
+    <section id="viewLab" class="hidden space-y-8 no-print">
+      <!-- Intro Banner -->
+      <div class="bg-gradient-to-r from-indigo-900 via-blue-900 to-slate-900 rounded-2xl p-6 text-white shadow-lg">
+        <div class="max-w-3xl">
+          <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/30 text-blue-200 border border-blue-400/30">
+            Interactive Learning Companion
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold mt-2">Internet & Cyber Safety Interactive Lab</h2>
+          <p class="text-sm sm:text-base text-slate-200 mt-1">
+            Practice the concepts from your Class VI project — explore how Email & Cloud Storage work, spot hidden Trojan Horse malware, and test yourself with the Viva Quiz!
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Lab 1: Email Address Anatomy Explorer (Page 4 Topic) -->
+        <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-md border border-rose-200">
+                Page 4 Topic • Email & Cloud
+              </span>
+              <span class="text-xs text-slate-500">Interactive Builder</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">1. Email Address Anatomy Explorer</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              As stated on Page 4 of your project: <em>"An email address contains a username and a domain name."</em> Type below to see how an email address is structured!
+            </p>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="emailUserPart" class="block text-xs font-semibold text-slate-700 mb-1">Username (Who you are)</label>
+                <input id="emailUserPart" type="text" value="asfar.jawed" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-600" />
+              </div>
+              <div>
+                <label for="emailDomainPart" class="block text-xs font-semibold text-slate-700 mb-1">Domain Name (Mail Service)</label>
+                <select id="emailDomainPart" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white focus:outline-none focus:border-blue-600">
+                  <option value="gmail.com">gmail.com (Google Mail)</option>
+                  <option value="jibreelschool.edu.in">jibreelschool.edu.in (School Domain)</option>
+                  <option value="yahoo.com">yahoo.com (Yahoo Mail)</option>
+                  <option value="outlook.com">outlook.com (Microsoft Outlook)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Visual Breakdown Display -->
+            <div class="mt-5 p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-xs font-semibold text-slate-500 uppercase mb-2">Live Email Address Breakdown:</div>
+              <div class="flex flex-wrap items-center justify-center gap-1 text-base sm:text-xl font-mono font-bold py-2">
+                <span id="dispEmailUser" class="px-3 py-1.5 rounded-lg bg-blue-100 text-blue-800 border border-blue-300">asfar.jawed</span>
+                <span class="px-2 py-1.5 rounded-lg bg-amber-100 text-amber-800 border border-amber-300">@</span>
+                <span id="dispEmailDomain" class="px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">gmail.com</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 mt-3 text-center text-xs">
+                <div class="p-2 rounded bg-blue-50 text-blue-900">
+                  <strong>Username</strong><br/>Unique account ID
+                </div>
+                <div class="p-2 rounded bg-amber-50 text-amber-900">
+                  <strong>"At" Symbol</strong><br/>Separates parts
+                </div>
+                <div class="p-2 rounded bg-emerald-50 text-emerald-900">
+                  <strong>Domain Name</strong><br/>Server hosting mail
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>☁️ Cloud Storage Partner: <strong>Google Drive</strong></span>
+            <button id="btnSimulateCloudSave" type="button" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition">
+              ☁️ Test Cloud Backup
+            </button>
+          </div>
+        </div>
+
+        <!-- Lab 2: Trojan Horse Cyber Threat Scanner (Page 6 Topic) -->
+        <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                Page 6 Topic • Cyber Threats
+              </span>
+              <span class="text-xs text-slate-500">Security Scanner</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">2. Spot the "Trojan Horse" Fake Software!</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Hackers send fake programs that look like a safe "gift" (just like the wooden horse of Troy). Click on each file below to scan it before installing!
+            </p>
+
+            <div class="mt-4 space-y-2.5" id="trojanFilesList">
+              <button type="button" data-file-id="0" class="trojan-item w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/40 transition flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">🎁</span>
+                  <div>
+                    <div class="text-sm font-bold text-slate-900">Free_99999_Game_Coins_Generator.exe</div>
+                    <div class="text-xs text-slate-500">Pop-up Ad • "Click to claim your free prize!"</div>
+                  </div>
+                </div>
+                <span class="scan-badge text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Scan File 🔍</span>
+              </button>
+
+              <button type="button" data-file-id="1" class="trojan-item w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/40 transition flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">📁</span>
+                  <div>
+                    <div class="text-sm font-bold text-slate-900">Class_VI_Computer_Notes.pdf</div>
+                    <div class="text-xs text-slate-500">Shared on School Google Drive by Mr. Tauqeer Khan</div>
+                  </div>
+                </div>
+                <span class="scan-badge text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Scan File 🔍</span>
+              </button>
+
+              <button type="button" data-file-id="2" class="trojan-item w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/40 transition flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">🐴</span>
+                  <div>
+                    <div class="text-sm font-bold text-slate-900">Super_Speed_PC_Booster_Free_Gift.zip</div>
+                    <div class="text-xs text-slate-500">Unknown sender • Asks for your password to install</div>
+                  </div>
+                </div>
+                <span class="scan-badge text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Scan File 🔍</span>
+              </button>
+            </div>
+
+            <div id="trojanScanResult" class="mt-4 p-3.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm">
+              🛡️ <strong>Security Shield Ready:</strong> Click any file above to inspect whether it is safe or a hidden <strong>Trojan Horse</strong>!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lab 3: Class VI Project Viva / Review Quiz -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+              Viva & Exam Readiness
+            </span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">3. Project Knowledge Quiz (6 Questions from Your Pages)</h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="quizScoreBadge" class="text-sm font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-800">
+              Score: 0 / 6
+            </span>
+            <button id="btnResetQuiz" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-800 transition">
+              Reset Quiz
+            </button>
+          </div>
+        </div>
+
+        <div id="quizQuestionsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JS -->
         </div>
       </div>
     </section>
 
-    <div id="inputArea">
-      <div class="input-wrap">
-        <textarea id="userInput" placeholder="Type a message or paste code..." rows="1" disabled></textarea>
-        <button id="sendBtn" type="button" disabled>➤</button>
+
+    <!-- ==========================================
+         VIEW 3: PROJECT ASSEMBLY & SUBMISSION GUIDE
+         ========================================== -->
+    <section id="viewGuide" class="hidden space-y-6 no-print">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+              Official Submission Instructions (Page 1 of PDF)
+            </span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+              How to Assemble & Submit Your Project
+            </h2>
+            <p class="text-sm text-slate-600">
+              Follow these exact rules from Jibreel International School so you get full marks!
+            </p>
+          </div>
+          <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5 text-right">
+            <div class="text-xs font-semibold text-rose-700 uppercase">Last Date for Submission</div>
+            <div class="text-lg font-extrabold text-rose-900">02 / 11 / 2026</div>
+          </div>
+        </div>
+
+        <!-- Do's and Don'ts Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
+            <h3 class="font-bold text-emerald-950 text-base flex items-center gap-2">
+              <span>✅</span> What You MUST Do
+            </h3>
+            <ul class="mt-2.5 space-y-2 text-xs sm:text-sm text-emerald-900">
+              <li class="flex items-start gap-2">
+                <span class="font-bold">•</span>
+                <span><strong>Paper:</strong> Use <strong>loose A4-sized file papers</strong> (7 sheets total, one for each page of the project).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold">•</span>
+                <span><strong>Binding:</strong> Punch holes on the left side and <strong>tie the pages together with a colorful lace or ribbon</strong>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold">•</span>
+                <span><strong>Images (Draw or Paste):</strong> Include the 2 listed images on every page (14 images total across Pages 1 to 7).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold">•</span>
+                <span><strong>Signature & Date:</strong> Sign and write the date cleanly on <strong>Page 2: Acknowledgement</strong>.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-xl bg-rose-50/70 border border-rose-200">
+            <h3 class="font-bold text-rose-950 text-base flex items-center gap-2">
+              <span>🚫</span> What You Must NOT Use
+            </h3>
+            <ul class="mt-2.5 space-y-2 text-xs sm:text-sm text-rose-900">
+              <li class="flex items-start gap-2">
+                <span class="font-bold">✖</span>
+                <span><strong>Do NOT use a hard cover</strong> of any kind.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold">✖</span>
+                <span><strong>Do NOT use a plastic file</strong> (no stick files, ring binders, or clear bags).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="font-bold">✖</span>
+                <span><strong>Do NOT use a folder</strong> — only loose A4 file sheets tied with a colorful ribbon/lace!</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Interactive 7-Page Completion Checklist -->
+        <div class="mt-6 pt-5 border-t border-slate-200">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-slate-900 text-base">📋 Page-by-Page Completion Tracker</h3>
+            <span id="checklistProgressText" class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
+              0 of 7 Pages Checked
+            </span>
+          </div>
+          <div id="checklistItemsContainer" class="space-y-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
   </main>
 
-  <!-- Content Formatter Dependency Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 px-4 sm:px-6 text-center text-xs text-slate-500 no-print mt-auto">
+    Computer Studies Project Final Term 2026–27 • Class VI • Jibreel International School • Submitted to Mr. Tauqeer Khan
+  </footer>
 
-  <script type="module">
-    import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+  <!-- APPLICATION LOGIC -->
+  <script>
+    (function() {
+      // State
+      var state = {
+        schoolName: "Jibreel International School",
+        firstName: "Asfar",
+        fullName: "Asfar Jawed",
+        section: "A",
+        rollNo: "12",
+        teacherName: "Mr. Tauqeer Khan",
+        submissionDate: "02/11/2026",
+        activeTab: "pages",       // 'pages' | 'lab' | 'guide'
+        selectedPage: 0,          // 0 = Show All 7 Pages, 1..7 = specific page
+        sketchMode: false,        // false = Full Color, true = Pencil Sketch Outline
+        handwritingFont: false,   // false = Clean Sans, true = Handwriting Kalam
+        ruledLines: false,
+        showDrawingTips: false,
+        ribbonColor: "#e11d48",
+        checkedPages: {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false},
+        quizAnswers: {}
+      };
 
-    const modelId = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
-
-    let engine = null;
-    let ready = false;
-    let generating = false;
-
-    const chatbox = document.getElementById("chatbox");
-    const welcome = document.getElementById("welcome");
-    const input = document.getElementById("userInput");
-    const sendBtn = document.getElementById("sendBtn");
-
-    // Unified element hooks to sync status views together across layout adjustments
-    const statusLabels = document.querySelectorAll(".d-status, .m-status");
-    const statusDetails = document.querySelectorAll(".d-detail, .m-detail");
-    const progressBars = document.querySelectorAll(".d-progress, .m-progress");
-    const clearButtons = document.querySelectorAll(".session-clear-btn");
-
-    marked.setOptions({
-      breaks: true,
-      highlight: function(code, lang) {
-        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-        return hljs.highlight(code, { language }).value;
-      }
-    });
-
-    let messages = loadChat();
-    renderStoredMessages();
-    init();
-
-    // Auto-adjust container box sizes to prevent viewport clipping
-    input.addEventListener("input", () => {
-      const isMobile = window.innerWidth <= 768;
-      const baseHeight = isMobile ? 20 : 26;
-      input.style.height = baseHeight + "px";
-      input.style.height = (input.scrollHeight) + "px";
-    });
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-
-    sendBtn.addEventListener("click", sendMessage);
-
-    clearButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        localStorage.removeItem("apexai-unified-chat");
-        messages = [];
-        location.reload();
-      });
-    });
-
-    document.querySelectorAll(".prompt").forEach((button) => {
-      button.addEventListener("click", () => {
-        input.value = button.textContent.trim();
-        input.dispatchEvent(new Event('input'));
-        input.focus();
-      });
-    });
-
-    async function init() {
-      if (!("gpu" in navigator)) {
-        updateGlobalStatus("HARDWARE ERROR", "WebGPU is missing. Access via Chrome or Edge.", 0);
-        return;
-      }
-
+      // Load saved state safely
       try {
-        updateGlobalStatus("LOADING 0%", "Fetching runtime assets.", 0);
+        var saved = localStorage.getItem("jis_class6_cs_project_v1");
+        if (saved) {
+          var parsed = JSON.parse(saved);
+          for (var k in parsed) {
+            if (Object.prototype.hasOwnProperty.call(parsed, k)) {
+              state[k] = parsed[k];
+            }
+          }
+        }
+      } catch (e) {
+        // Ignore storage error in restricted iframe
+      }
 
-        engine = await webllm.CreateMLCEngine(modelId, {
-          initProgressCallback: (p) => {
-            const percent = Math.round((p.progress || 0) * 100);
-            updateGlobalStatus(`LOADING ${percent}%`, p.text || "Caching model structure.", percent);
+      function saveState() {
+        try {
+          localStorage.setItem("jis_class6_cs_project_v1", JSON.stringify(state));
+        } catch (e) {}
+      }
+
+      var toastTimer = null;
+      function showToast(msg, icon) {
+        var c = document.getElementById("toastContainer");
+        var m = document.getElementById("toastMessage");
+        var ic = document.getElementById("toastIcon");
+        if (!c || !m) return;
+        m.textContent = msg;
+        ic.textContent = icon || "✓";
+        c.classList.remove("hidden");
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function() {
+          c.classList.add("hidden");
+        }, 2600);
+      }
+
+      function escapeHtml(str) {
+        return String(str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // ==========================================
+      // 14 CUSTOM HIGH-PRECISION SVG ILLUSTRATIONS
+      // ==========================================
+      var svgIllustrations = {
+        // Page 1, Image 1: School Crest / Emblem
+        p1_img1: function(school) {
+          return '<svg viewBox="0 0 260 210" class="w-full h-44 mx-auto" role="img" aria-label="School Crest Emblem">' +
+            '<defs>' +
+              '<linearGradient id="crestGrad" x1="0" y1="0" x2="1" y2="1">' +
+                '<stop offset="0%" stop-color="#1e3a8a"/>' +
+                '<stop offset="100%" stop-color="#1d4ed8"/>' +
+              '</linearGradient>' +
+            '</defs>' +
+            '<!-- Laurel Wreath -->' +
+            '<path d="M65,155 C35,125 38,70 72,42" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>' +
+            '<path d="M195,155 C225,125 222,70 188,42" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>' +
+            '<ellipse cx="50" cy="115" rx="9" ry="5" transform="rotate(-35 50 115)" fill="#22c55e"/>' +
+            '<ellipse cx="48" cy="90" rx="9" ry="5" transform="rotate(-15 48 90)" fill="#22c55e"/>' +
+            '<ellipse cx="58" cy="65" rx="9" ry="5" transform="rotate(15 58 65)" fill="#22c55e"/>' +
+            '<ellipse cx="210" cy="115" rx="9" ry="5" transform="rotate(35 210 115)" fill="#22c55e"/>' +
+            '<ellipse cx="212" cy="90" rx="9" ry="5" transform="rotate(15 212 90)" fill="#22c55e"/>' +
+            '<ellipse cx="202" cy="65" rx="9" ry="5" transform="rotate(-15 202 65)" fill="#22c55e"/>' +
+            '<!-- Outer Shield -->' +
+            '<path d="M80,28 L180,28 L180,98 C180,136 130,162 130,162 C130,162 80,136 80,98 Z" fill="url(#crestGrad)" stroke="#f59e0b" stroke-width="5"/>' +
+            '<path d="M88,36 L172,36 L172,95 C172,126 130,150 130,150 C130,150 88,126 88,95 Z" fill="none" stroke="#fde68a" stroke-width="1.5" stroke-dasharray="4 2"/>' +
+            '<!-- Torch / Star of Knowledge -->' +
+            '<polygon points="130,42 134,52 145,52 136,58 139,68 130,62 121,68 124,58 115,52 126,52" fill="#fbbf24"/>' +
+            '<!-- Open Book inside Shield -->' +
+            '<path d="M102,82 Q116,76 130,84 Q144,76 158,82 L158,116 Q144,110 130,118 Q116,110 102,116 Z" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>' +
+            '<line x1="130" y1="84" x2="130" y2="118" stroke="#0f172a" stroke-width="2"/>' +
+            '<line x1="108" y1="92" x2="124" y2="90" stroke="#64748b" stroke-width="1.8"/>' +
+            '<line x1="108" y1="100" x2="124" y2="98" stroke="#64748b" stroke-width="1.8"/>' +
+            '<line x1="136" y1="90" x2="152" y2="92" stroke="#64748b" stroke-width="1.8"/>' +
+            '<line x1="136" y1="98" x2="152" y2="100" stroke="#64748b" stroke-width="1.8"/>' +
+            '<!-- Scroll Banner -->' +
+            '<path d="M45,172 L215,172 L205,196 L55,196 Z" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>' +
+            '<text x="130" y="188" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#78350f" font-family="sans-serif">' +
+              escapeHtml(school.toUpperCase().slice(0, 28)) +
+            '</text>' +
+          '</svg>';
+        },
+
+        // Page 1, Image 2: Laptop with a Globe on the Screen
+        p1_img2: function() {
+          return '<svg viewBox="0 0 260 210" class="w-full h-44 mx-auto" role="img" aria-label="Laptop with a Globe on the Screen">' +
+            '<!-- Laptop Screen Frame -->' +
+            '<rect x="45" y="22" width="170" height="112" rx="10" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>' +
+            '<rect x="53" y="30" width="154" height="96" rx="4" fill="#e0f2fe"/>' +
+            '<!-- Camera dot -->' +
+            '<circle cx="130" cy="26" r="2" fill="#94a3b8"/>' +
+            '<!-- Orbit rings around globe -->' +
+            '<ellipse cx="130" cy="78" rx="58" ry="20" transform="rotate(-18 130 78)" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4 3"/>' +
+            '<ellipse cx="130" cy="78" rx="58" ry="20" transform="rotate(18 130 78)" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-dasharray="4 3"/>' +
+            '<!-- Globe on Screen -->' +
+            '<circle cx="130" cy="78" r="36" fill="#0284c7" stroke="#0369a1" stroke-width="2.5"/>' +
+            '<!-- Continents -->' +
+            '<path d="M112,56 Q122,52 128,62 Q134,70 124,80 Q114,84 110,72 Z" fill="#22c55e"/>' +
+            '<path d="M138,60 Q152,62 156,76 Q152,92 140,96 Q134,86 138,74 Z" fill="#22c55e"/>' +
+            '<path d="M114,90 Q124,88 128,98 Q122,108 114,102 Z" fill="#16a34a"/>' +
+            '<!-- Latitude / Longitude lines -->' +
+            '<ellipse cx="130" cy="78" rx="18" ry="36" fill="none" stroke="#bae6fd" stroke-width="1.3"/>' +
+            '<line x1="94" y1="78" x2="166" y2="78" stroke="#bae6fd" stroke-width="1.3"/>' +
+            '<line x1="99" y1="63" x2="161" y2="63" stroke="#bae6fd" stroke-width="1.1"/>' +
+            '<line x1="99" y1="93" x2="161" y2="93" stroke="#bae6fd" stroke-width="1.1"/>' +
+            '<!-- WWW tag -->' +
+            '<rect x="60" y="36" width="38" height="15" rx="4" fill="#0f172a"/>' +
+            '<text x="79" y="47" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#38bdf8" font-family="monospace">WWW</text>' +
+            '<!-- Laptop Base / Keyboard -->' +
+            '<path d="M24,134 L236,134 L250,168 C252,173 248,178 242,178 L18,178 C12,178 8,173 10,168 Z" fill="#cbd5e1" stroke="#334155" stroke-width="3"/>' +
+            '<polygon points="48,140 212,140 220,158 40,158" fill="#475569"/>' +
+            '<rect x="108" y="162" width="44" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="1"/>' +
+          '</svg>';
+        },
+
+        // Page 2, Image 1: Decorative "Thank You" Ribbon or Banner
+        p2_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Decorative Thank You Ribbon Banner">' +
+            '<!-- Sparkles & Stars -->' +
+            '<polygon points="48,45 52,55 62,55 54,61 57,71 48,65 39,71 42,61 34,55 44,55" fill="#fbbf24"/>' +
+            '<polygon points="212,45 216,55 226,55 218,61 221,71 212,65 203,71 206,61 198,55 208,55" fill="#fbbf24"/>' +
+            '<circle cx="130" cy="36" r="6" fill="#f43f5e"/>' +
+            '<circle cx="110" cy="42" r="4" fill="#38bdf8"/>' +
+            '<circle cx="150" cy="42" r="4" fill="#38bdf8"/>' +
+            '<!-- Ribbon Left & Right Tails -->' +
+            '<polygon points="18,95 62,82 62,136 18,148 34,118" fill="#be123c" stroke="#881337" stroke-width="2.5"/>' +
+            '<polygon points="242,95 198,82 198,136 242,148 226,118" fill="#be123c" stroke="#881337" stroke-width="2.5"/>' +
+            '<!-- Ribbon Folds -->' +
+            '<polygon points="46,124 62,136 62,118" fill="#881337"/>' +
+            '<polygon points="214,124 198,136 198,118" fill="#881337"/>' +
+            '<!-- Main Curved Banner -->' +
+            '<path d="M46,72 Q130,54 214,72 L214,126 Q130,108 46,126 Z" fill="#f43f5e" stroke="#881337" stroke-width="3"/>' +
+            '<path d="M52,79 Q130,62 208,79 L208,119 Q130,102 52,119 Z" fill="none" stroke="#fecdd3" stroke-width="1.8" stroke-dasharray="5 3"/>' +
+            '<!-- THANK YOU Text -->' +
+            '<text x="130" y="102" text-anchor="middle" font-size="21" font-weight="900" fill="#ffffff" letter-spacing="2" font-family="serif">THANK YOU</text>' +
+            '<!-- Decorative Flourish under ribbon -->' +
+            '<path d="M85,155 Q130,138 175,155" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>' +
+            '<circle cx="130" cy="147" r="4.5" fill="#d97706"/>' +
+          '</svg>';
+        },
+
+        // Page 2, Image 2: Drawing of a Pen and an Open Book
+        p2_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Drawing of a Pen and an Open Book">' +
+            '<!-- Open Book Base Cover -->' +
+            '<path d="M28,62 Q78,48 130,66 Q182,48 232,62 L232,162 Q182,146 130,164 Q78,146 28,162 Z" fill="#1e40af" stroke="#0f172a" stroke-width="3"/>' +
+            '<!-- Book Pages -->' +
+            '<path d="M35,56 Q82,42 130,60 Q178,42 225,56 L225,152 Q178,136 130,154 Q82,136 35,152 Z" fill="#fffbeb" stroke="#475569" stroke-width="2.5"/>' +
+            '<line x1="130" y1="60" x2="130" y2="154" stroke="#475569" stroke-width="2.5"/>' +
+            '<!-- Bookmark Ribbon -->' +
+            '<path d="M130,154 L122,182 L130,175 L138,182 Z" fill="#ef4444" stroke="#991b1b" stroke-width="1.5"/>' +
+            '<!-- Page Lines Left -->' +
+            '<line x1="50" y1="76" x2="114" y2="82" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="50" y1="92" x2="114" y2="98" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="50" y1="108" x2="114" y2="114" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="50" y1="124" x2="100" y2="129" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<!-- Page Lines Right -->' +
+            '<line x1="146" y1="82" x2="210" y2="76" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="146" y1="98" x2="210" y2="92" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="146" y1="114" x2="195" y2="109" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>' +
+            '<!-- Classic Fountain Pen angled across book -->' +
+            '<g transform="translate(155, 88) rotate(-38)">' +
+              '<rect x="-10" y="-65" width="20" height="86" rx="5" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>' +
+              '<rect x="-10" y="-10" width="20" height="7" fill="#f59e0b"/>' +
+              '<line x1="6" y1="-58" x2="6" y2="-22" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>' +
+              '<polygon points="-8,21 8,21 3,42 -3,42" fill="#334155"/>' +
+              '<polygon points="-4,42 4,42 0,58" fill="#fbbf24" stroke="#78350f" stroke-width="1.2"/>' +
+              '<line x1="0" y1="44" x2="0" y2="56" stroke="#78350f" stroke-width="1.2"/>' +
+            '</g>' +
+          '</svg>';
+        },
+
+        // Page 3, Image 1: A Tablet Screen Showing a YouTube Video Playing
+        p3_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Tablet Screen Showing YouTube Video Playing">' +
+            '<!-- Tablet Body -->' +
+            '<rect x="24" y="22" width="212" height="152" rx="16" fill="#1e293b" stroke="#0f172a" stroke-width="3.5"/>' +
+            '<rect x="36" y="32" width="188" height="132" rx="6" fill="#ffffff"/>' +
+            '<!-- Front camera & home button -->' +
+            '<circle cx="30" cy="98" r="2.5" fill="#64748b"/>' +
+            '<circle cx="230" cy="98" r="4" fill="#334155"/>' +
+            '<!-- Top YouTube Header Bar -->' +
+            '<rect x="36" y="32" width="188" height="22" fill="#f8fafc"/>' +
+            '<rect x="44" y="37" width="20" height="13" rx="3.5" fill="#ef4444"/>' +
+            '<polygon points="52,40 52,47 58,43.5" fill="#ffffff"/>' +
+            '<text x="68" y="47" font-size="10" font-weight="800" fill="#0f172a" font-family="sans-serif">YouTube</text>' +
+            '<!-- Video Player Frame -->' +
+            '<rect x="46" y="58" width="168" height="76" rx="6" fill="#0f172a"/>' +
+            '<!-- Decorative scene inside video -->' +
+            '<circle cx="130" cy="92" r="24" fill="#ef4444" stroke="#ffffff" stroke-width="2.5"/>' +
+            '<polygon points="124,81 124,103 142,92" fill="#ffffff"/>' +
+            '<!-- Progress bar inside video -->' +
+            '<line x1="54" y1="124" x2="204" y2="124" stroke="#475569" stroke-width="4" stroke-linecap="round"/>' +
+            '<line x1="54" y1="124" x2="128" y2="124" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>' +
+            '<circle cx="128" cy="124" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>' +
+            '<!-- Video Title & Subscribe Row -->' +
+            '<rect x="46" y="140" width="98" height="7" rx="3" fill="#334155"/>' +
+            '<rect x="46" y="151" width="64" height="5" rx="2.5" fill="#94a3b8"/>' +
+            '<rect x="166" y="140" width="48" height="16" rx="8" fill="#ef4444"/>' +
+            '<text x="190" y="151" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#ffffff" font-family="sans-serif">SUBSCRIBE</text>' +
+          '</svg>';
+        },
+
+        // Page 3, Image 2: Hand Holding a Smartphone Showing the G Pay Logo
+        p3_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Hand Holding a Smartphone Showing the G Pay Logo">' +
+            '<!-- Hand / Palm Behind Phone -->' +
+            '<path d="M62,188 L62,135 C52,128 50,112 62,106 L82,106 L186,120 C198,125 196,146 184,152 L175,188 Z" fill="#fdba74" stroke="#9a3412" stroke-width="2.5"/>' +
+            '<!-- Fingers Wrapped Left Side -->' +
+            '<rect x="64" y="68" width="22" height="14" rx="7" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>' +
+            '<rect x="62" y="86" width="24" height="14" rx="7" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>' +
+            '<rect x="64" y="104" width="22" height="14" rx="7" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>' +
+            '<rect x="68" y="122" width="20" height="13" rx="6.5" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>' +
+            '<!-- Smartphone Body -->' +
+            '<rect x="82" y="16" width="96" height="166" rx="14" fill="#0f172a" stroke="#334155" stroke-width="3"/>' +
+            '<rect x="88" y="26" width="84" height="144" rx="8" fill="#ffffff"/>' +
+            '<!-- Speaker Notch -->' +
+            '<line x1="118" y1="21" x2="142" y2="21" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>' +
+            '<!-- G Pay Multi-color Emblem -->' +
+            '<rect x="96" y="44" width="68" height="44" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>' +
+            '<!-- Colored G Circle -->' +
+            '<path d="M118,58 A10,10 0 0,1 125,61 L122,64 A6,6 0 0,0 112,66 A6,6 0 0,0 123,69 L118,69 L118,65 L127,65 C127.5,68 126,74 118,76 A10,10 0 0,1 108,66 A10,10 0 0,1 118,58 Z" fill="#2563eb"/>' +
+            '<circle cx="114" cy="60" r="3" fill="#ef4444"/>' +
+            '<circle cx="111" cy="68" r="3" fill="#f59e0b"/>' +
+            '<circle cx="116" cy="74" r="3" fill="#16a34a"/>' +
+            '<text x="145" y="71" text-anchor="middle" font-size="14" font-weight="800" fill="#1e293b" font-family="sans-serif">Pay</text>' +
+            '<!-- Payment Success Tick Circle -->' +
+            '<circle cx="130" cy="116" r="18" fill="#22c55e"/>' +
+            '<polyline points="121,116 127,122 140,109" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<text x="130" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a" font-family="sans-serif">₹ 250 Paid</text>' +
+            '<text x="130" y="160" text-anchor="middle" font-size="7.5" fill="#16a34a" font-weight="bold" font-family="sans-serif">Instant UPI Transfer</text>' +
+            '<!-- Thumb on Right -->' +
+            '<path d="M168,112 C188,105 194,126 176,136 L166,140 Z" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>' +
+          '</svg>';
+        },
+
+        // Page 4, Image 1: The Red and White Gmail Envelope Logo
+        p4_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Red and White Gmail Envelope Logo">' +
+            '<!-- Outer Soft Halo -->' +
+            '<circle cx="130" cy="100" r="82" fill="#fff1f2" stroke="#fecdd3" stroke-width="2"/>' +
+            '<!-- Main White Envelope Body -->' +
+            '<rect x="48" y="46" width="164" height="112" rx="14" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>' +
+            '<!-- Left & Right Red Pillars of the M -->' +
+            '<path d="M48,60 C48,51 55,46 62,46 L76,46 L76,158 L62,158 C55,158 48,152 48,144 Z" fill="#dc2626"/>' +
+            '<path d="M212,60 C212,51 205,46 198,46 L184,46 L184,158 L198,158 C205,158 212,152 212,144 Z" fill="#b91c1c"/>' +
+            '<!-- Bottom Fold Lines -->' +
+            '<line x1="76" y1="156" x2="130" y2="112" stroke="#cbd5e1" stroke-width="2.5"/>' +
+            '<line x1="184" y1="156" x2="130" y2="112" stroke="#cbd5e1" stroke-width="2.5"/>' +
+            '<!-- Red Envelope Flap forming the M -->' +
+            '<polyline points="54,54 130,114 206,54" fill="none" stroke="#ef4444" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<!-- Label Badge -->' +
+            '<rect x="92" y="168" width="76" height="20" rx="10" fill="#dc2626"/>' +
+            '<text x="130" y="182" text-anchor="middle" font-size="11" font-weight="bold" fill="#ffffff" font-family="sans-serif">GMAIL</text>' +
+          '</svg>';
+        },
+
+        // Page 4, Image 2: A Blue Cloud with a Digital File Folder Inside
+        p4_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Blue Cloud with Digital File Folder Inside">' +
+            '<!-- Fluffy Blue Cloud Shape -->' +
+            '<path d="M64,148 C36,148 22,128 28,104 C32,86 48,76 64,78 C74,50 108,36 138,46 C162,54 176,74 176,84 C198,82 222,96 224,118 C226,136 210,148 190,148 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="4" stroke-linejoin="round"/>' +
+            '<!-- Inner Cloud Highlight -->' +
+            '<path d="M68,140 C46,140 36,125 40,108" fill="none" stroke="#bae6fd" stroke-width="3" stroke-linecap="round"/>' +
+            '<!-- Digital File Folder Inside Cloud -->' +
+            '<path d="M92,76 L118,76 L125,85 L168,85 C172,85 175,88 175,92 L175,134 C175,138 172,141 168,141 L92,141 C88,141 85,138 85,134 L85,83 C85,79 88,76 92,76 Z" fill="#f59e0b" stroke="#78350f" stroke-width="2.5"/>' +
+            '<!-- White Document Sheet Peeking Out -->' +
+            '<rect x="96" y="82" width="66" height="24" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>' +
+            '<line x1="104" y1="90" x2="146" y2="90" stroke="#94a3b8" stroke-width="2"/>' +
+            '<line x1="104" y1="97" x2="136" y2="97" stroke="#94a3b8" stroke-width="2"/>' +
+            '<!-- Front Flap of Folder -->' +
+            '<rect x="85" y="96" width="90" height="45" rx="5" fill="#fbbf24" stroke="#78350f" stroke-width="2.5"/>' +
+            '<!-- Cloud Sync / Upload Arrow on Folder -->' +
+            '<circle cx="130" cy="118" r="12" fill="#fffbeb" stroke="#d97706" stroke-width="1.8"/>' +
+            '<path d="M130,124 L130,112 M125,117 L130,112 L135,117" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<!-- Bottom Connection Nodes -->' +
+            '<line x1="100" y1="148" x2="100" y2="172" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="3 3"/>' +
+            '<line x1="160" y1="148" x2="160" y2="172" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="3 3"/>' +
+            '<circle cx="100" cy="176" r="5" fill="#0284c7"/>' +
+            '<circle cx="160" cy="176" r="5" fill="#0284c7"/>' +
+          '</svg>';
+        },
+
+        // Page 5, Image 1: A Digital Shopping Cart Representing E-Commerce
+        p5_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Digital Shopping Cart Representing E-Commerce">' +
+            '<!-- Background Digital Screen Halo -->' +
+            '<rect x="34" y="24" width="192" height="148" rx="18" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" stroke-dasharray="6 4"/>' +
+            '<!-- Packages / Boxes inside the Cart -->' +
+            '<rect x="92" y="54" width="36" height="34" rx="4" fill="#f59e0b" stroke="#78350f" stroke-width="2"/>' +
+            '<line x1="110" y1="54" x2="110" y2="88" stroke="#fef3c7" stroke-width="4"/>' +
+            '<rect x="132" y="46" width="40" height="42" rx="4" fill="#ec4899" stroke="#831843" stroke-width="2"/>' +
+            '<path d="M142,46 Q152,34 162,46" fill="none" stroke="#831843" stroke-width="2.5"/>' +
+            '<!-- Shopping Cart Handle & Basket -->' +
+            '<path d="M44,54 L66,54 L86,128 L182,128 L198,74 L72,74" fill="none" stroke="#1e40af" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<!-- Cart Grid Wires -->' +
+            '<line x1="78" y1="92" x2="192" y2="92" stroke="#3b82f6" stroke-width="2.5"/>' +
+            '<line x1="82" y1="110" x2="186" y2="110" stroke="#3b82f6" stroke-width="2.5"/>' +
+            '<line x1="108" y1="74" x2="112" y2="128" stroke="#3b82f6" stroke-width="2.5"/>' +
+            '<line x1="138" y1="74" x2="138" y2="128" stroke="#3b82f6" stroke-width="2.5"/>' +
+            '<line x1="168" y1="74" x2="164" y2="128" stroke="#3b82f6" stroke-width="2.5"/>' +
+            '<!-- Cart Wheels -->' +
+            '<circle cx="96" cy="148" r="12" fill="#0f172a" stroke="#475569" stroke-width="3"/>' +
+            '<circle cx="96" cy="148" r="4" fill="#f8fafc"/>' +
+            '<circle cx="170" cy="148" r="12" fill="#0f172a" stroke="#475569" stroke-width="3"/>' +
+            '<circle cx="170" cy="148" r="4" fill="#f8fafc"/>' +
+            '<!-- Digital BUY NOW Badge -->' +
+            '<rect x="158" y="26" width="62" height="22" rx="6" fill="#16a34a"/>' +
+            '<text x="189" y="41" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#ffffff" font-family="sans-serif">BUY NOW</text>' +
+          '</svg>';
+        },
+
+        // Page 5, Image 2: Headphones with a Microphone Representing Podcasts
+        p5_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Headphones with a Microphone Representing Podcasts">' +
+            '<!-- Headphone Arch Band -->' +
+            '<path d="M58,112 C58,52 202,52 202,112" fill="none" stroke="#1e293b" stroke-width="12" stroke-linecap="round"/>' +
+            '<path d="M70,96 C70,56 190,56 190,96" fill="none" stroke="#6366f1" stroke-width="5" stroke-linecap="round"/>' +
+            '<!-- Left & Right Ear Cups -->' +
+            '<rect x="42" y="96" width="28" height="54" rx="12" fill="#4f46e5" stroke="#1e1b4b" stroke-width="3"/>' +
+            '<rect x="64" y="102" width="10" height="42" rx="5" fill="#0f172a"/>' +
+            '<rect x="190" y="96" width="28" height="54" rx="12" fill="#4f46e5" stroke="#1e1b4b" stroke-width="3"/>' +
+            '<rect x="186" y="102" width="10" height="42" rx="5" fill="#0f172a"/>' +
+            '<!-- Studio Podcast Microphone in Center -->' +
+            '<rect x="112" y="76" width="36" height="58" rx="18" fill="#cbd5e1" stroke="#0f172a" stroke-width="3"/>' +
+            '<!-- Mic Mesh Lines -->' +
+            '<line x1="114" y1="92" x2="146" y2="92" stroke="#475569" stroke-width="2"/>' +
+            '<line x1="113" y1="102" x2="147" y2="102" stroke="#475569" stroke-width="2"/>' +
+            '<line x1="115" y1="112" x2="145" y2="112" stroke="#475569" stroke-width="2"/>' +
+            '<!-- Mic U-Stand & Base -->' +
+            '<path d="M104,110 C104,146 156,146 156,110" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>' +
+            '<line x1="130" y1="138" x2="130" y2="168" stroke="#0f172a" stroke-width="5"/>' +
+            '<rect x="98" y="166" width="64" height="10" rx="5" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>' +
+            '<!-- Audio Soundwave Bars -->' +
+            '<line x1="88" y1="98" x2="88" y2="114" stroke="#ec4899" stroke-width="3.5" stroke-linecap="round"/>' +
+            '<line x1="96" y1="90" x2="96" y2="122" stroke="#ec4899" stroke-width="3.5" stroke-linecap="round"/>' +
+            '<line x1="164" y1="90" x2="164" y2="122" stroke="#ec4899" stroke-width="3.5" stroke-linecap="round"/>' +
+            '<line x1="172" y1="98" x2="172" y2="114" stroke="#ec4899" stroke-width="3.5" stroke-linecap="round"/>' +
+          '</svg>';
+        },
+
+        // Page 6, Image 1: The Ancient Orange Wooden Horse on Wheels
+        p6_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Ancient Orange Wooden Horse on Wheels">' +
+            '<!-- Wheeled Platform Base -->' +
+            '<rect x="44" y="152" width="172" height="14" rx="4" fill="#9a3412" stroke="#431407" stroke-width="2.5"/>' +
+            '<!-- Horse Legs -->' +
+            '<rect x="74" y="114" width="16" height="40" fill="#ea580c" stroke="#431407" stroke-width="2.5"/>' +
+            '<rect x="96" y="116" width="14" height="38" fill="#c2410c" stroke="#431407" stroke-width="2.5"/>' +
+            '<rect x="158" y="114" width="16" height="40" fill="#ea580c" stroke="#431407" stroke-width="2.5"/>' +
+            '<rect x="140" y="116" width="14" height="38" fill="#c2410c" stroke="#431407" stroke-width="2.5"/>' +
+            '<!-- Wooden Horse Body -->' +
+            '<rect x="68" y="76" width="114" height="44" rx="10" fill="#f97316" stroke="#431407" stroke-width="3"/>' +
+            '<!-- Wood Plank Lines & Secret Trapdoor -->' +
+            '<line x1="70" y1="90" x2="180" y2="90" stroke="#7c2d12" stroke-width="2"/>' +
+            '<line x1="70" y1="105" x2="180" y2="105" stroke="#7c2d12" stroke-width="2"/>' +
+            '<rect x="112" y="84" width="30" height="26" rx="2" fill="#ea580c" stroke="#431407" stroke-width="2" stroke-dasharray="3 2"/>' +
+            '<!-- Wooden Tail -->' +
+            '<path d="M182,82 Q208,86 202,122 L190,118 Q192,96 182,94 Z" fill="#c2410c" stroke="#431407" stroke-width="2.5"/>' +
+            '<!-- Horse Neck & Head Facing Left -->' +
+            '<polygon points="88,80 68,80 54,32 82,26 98,58" fill="#f97316" stroke="#431407" stroke-width="3" stroke-linejoin="round"/>' +
+            '<!-- Horse Snout / Muzzle -->' +
+            '<polygon points="54,32 32,44 38,58 64,54" fill="#fb923c" stroke="#431407" stroke-width="2.5" stroke-linejoin="round"/>' +
+            '<!-- Ears & Mane -->' +
+            '<polygon points="62,28 58,14 70,24" fill="#c2410c" stroke="#431407" stroke-width="2"/>' +
+            '<circle cx="54" cy="40" r="3" fill="#0f172a"/>' +
+            '<!-- Wooden Wheels -->' +
+            '<circle cx="78" cy="168" r="16" fill="#d97706" stroke="#431407" stroke-width="3.5"/>' +
+            '<circle cx="78" cy="168" r="5" fill="#431407"/>' +
+            '<line x1="78" y1="152" x2="78" y2="184" stroke="#431407" stroke-width="2"/>' +
+            '<line x1="62" y1="168" x2="94" y2="168" stroke="#431407" stroke-width="2"/>' +
+            '<circle cx="176" cy="168" r="16" fill="#d97706" stroke="#431407" stroke-width="3.5"/>' +
+            '<circle cx="176" cy="168" r="5" fill="#431407"/>' +
+            '<line x1="176" y1="152" x2="176" y2="184" stroke="#431407" stroke-width="2"/>' +
+            '<line x1="160" y1="168" x2="192" y2="168" stroke="#431407" stroke-width="2"/>' +
+          '</svg>';
+        },
+
+        // Page 6, Image 2: Computer Monitor Showing a Red Skull & Large Warning Sign (!)
+        p6_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Computer Monitor Showing Red Skull and Warning Sign">' +
+            '<!-- Monitor Stand & Base -->' +
+            '<rect x="114" y="142" width="32" height="26" fill="#64748b" stroke="#1e293b" stroke-width="2.5"/>' +
+            '<path d="M84,168 L176,168 L184,178 L76,178 Z" fill="#475569" stroke="#1e293b" stroke-width="2.5"/>' +
+            '<!-- Monitor Outer Bezel -->' +
+            '<rect x="38" y="20" width="184" height="124" rx="10" fill="#1e293b" stroke="#0f172a" stroke-width="3.5"/>' +
+            '<rect x="48" y="30" width="164" height="102" rx="4" fill="#450a0a"/>' +
+            '<!-- Danger Stripes Header inside Screen -->' +
+            '<rect x="48" y="30" width="164" height="16" fill="#dc2626"/>' +
+            '<text x="130" y="41" text-anchor="middle" font-size="9" font-weight="900" fill="#ffffff" letter-spacing="1" font-family="monospace">! TROJAN ALERT !</text>' +
+            '<!-- Left Side: Red Skull Icon -->' +
+            '<circle cx="96" cy="76" r="22" fill="#ef4444" stroke="#fecaca" stroke-width="2"/>' +
+            '<rect x="86" y="88" width="20" height="14" rx="3" fill="#ef4444" stroke="#fecaca" stroke-width="2"/>' +
+            '<circle cx="88" cy="74" r="5" fill="#450a0a"/>' +
+            '<circle cx="104" cy="74" r="5" fill="#450a0a"/>' +
+            '<polygon points="96,80 93,86 99,86" fill="#450a0a"/>' +
+            '<line x1="91" y1="92" x2="91" y2="101" stroke="#450a0a" stroke-width="2"/>' +
+            '<line x1="96" y1="92" x2="96" y2="101" stroke="#450a0a" stroke-width="2"/>' +
+            '<line x1="101" y1="92" x2="101" y2="101" stroke="#450a0a" stroke-width="2"/>' +
+            '<!-- Right Side: Large Warning Sign (!) -->' +
+            '<polygon points="168,52 198,104 138,104" fill="#fbbf24" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/>' +
+            '<line x1="168" y1="68" x2="168" y2="86" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>' +
+            '<circle cx="168" cy="95" r="3" fill="#0f172a"/>' +
+            '<!-- Bottom Banner inside Screen -->' +
+            '<text x="130" y="122" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#fca5a5" font-family="monospace">FAKE SOFTWARE DETECTED</text>' +
+          '</svg>';
+        },
+
+        // Page 7, Image 1: Green Security Shield with a White Checkmark Inside It
+        p7_img1: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Green Security Shield with White Checkmark">' +
+            '<!-- Outer Glow Ring -->' +
+            '<circle cx="130" cy="100" r="80" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2" stroke-dasharray="6 4"/>' +
+            '<!-- Outer Green Shield -->' +
+            '<path d="M130,22 L200,48 L200,104 C200,148 130,180 130,180 C130,180 60,148 60,104 L60,48 Z" fill="#16a34a" stroke="#064e3b" stroke-width="4" stroke-linejoin="round"/>' +
+            '<!-- Shield Left Highlight Half -->' +
+            '<path d="M130,26 L130,175 C130,175 65,144 65,103 L65,51 Z" fill="#22c55e"/>' +
+            '<!-- Inner Shield Rim -->' +
+            '<path d="M130,36 L186,57 L186,102 C186,138 130,164 130,164 C130,164 74,138 74,102 L74,57 Z" fill="none" stroke="#bbf7d0" stroke-width="2.5"/>' +
+            '<!-- Bold White Checkmark -->' +
+            '<polyline points="98,102 120,124 164,78" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg>';
+        },
+
+        // Page 7, Image 2: Golden Padlock Representing Data Safety
+        p7_img2: function() {
+          return '<svg viewBox="0 0 260 200" class="w-full h-44 mx-auto" role="img" aria-label="Golden Padlock Representing Data Safety">' +
+            '<!-- Security Aura Circle -->' +
+            '<circle cx="130" cy="104" r="78" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>' +
+            '<!-- Padlock Shackle (Top Arch) -->' +
+            '<path d="M94,88 L94,58 C94,34 166,34 166,58 L166,88" fill="none" stroke="#d97706" stroke-width="18" stroke-linecap="round"/>' +
+            '<path d="M94,88 L94,58 C94,34 166,34 166,58 L166,88" fill="none" stroke="#fef08a" stroke-width="6" stroke-linecap="round"/>' +
+            '<!-- Padlock Golden Body -->' +
+            '<rect x="72" y="84" width="116" height="90" rx="16" fill="#f59e0b" stroke="#78350f" stroke-width="4"/>' +
+            '<!-- Top Shine Band -->' +
+            '<rect x="80" y="92" width="100" height="12" rx="6" fill="#fde047" opacity="0.65"/>' +
+            '<!-- Keyhole in Center -->' +
+            '<circle cx="130" cy="122" r="11" fill="#451a03"/>' +
+            '<polygon points="125,126 135,126 139,152 121,152" fill="#451a03"/>' +
+            '<!-- Sparkles -->' +
+            '<polygon points="52,66 56,74 64,74 58,79 60,87 52,82 44,87 46,79 40,74 48,74" fill="#fbbf24"/>' +
+            '<polygon points="208,66 212,74 220,74 214,79 216,87 208,82 200,87 202,79 196,74 204,74" fill="#fbbf24"/>' +
+          '</svg>';
+        }
+      };
+
+      // ==========================================
+      // 7 PAGES DATA (EXACT SCHOOL PDF TEXT + IMAGES)
+      // ==========================================
+      function getPagesData() {
+        return [
+          {
+            pageNum: 1,
+            badge: "Page 1 • Cover Page",
+            title: "Project Cover Page",
+            checklistLabel: "Page 1: Cover Page (School Name, Student Details, School Crest & Laptop with Globe)",
+            images: [
+              {
+                num: 1,
+                caption: "1. A logo or drawing of your School Crest/Emblem.",
+                tip: "Draw a U-shaped shield, add an open book inside with a star on top, and write the school name on a banner below.",
+                svg: svgIllustrations.p1_img1(state.schoolName)
+              },
+              {
+                num: 2,
+                caption: "2. A drawing of a laptop with a globe on the screen.",
+                tip: "Draw a rectangle for the laptop screen, a slanted trapezoid for the keyboard, and a circle with continents & grid lines in the center.",
+                svg: svgIllustrations.p1_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="text-center space-y-2 pb-5 border-b-2 border-amber-300/80">' +
+                  '<div class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-bold text-xs tracking-wide uppercase mb-1">' +
+                    'Computer Studies Project Final Term 2026–27' +
+                  '</div>' +
+                  '<h2 class="text-2xl sm:text-3xl font-extrabold text-blue-900 font-serif-school tracking-tight">' +
+                    escapeHtml(state.schoolName) +
+                  '</h2>' +
+                  '<div class="pt-2">' +
+                    '<div class="text-base sm:text-xl font-extrabold text-slate-900">Project Title: <span class="text-blue-700">INTERNET - ONLINE SURFING</span></div>' +
+                    '<div class="text-sm sm:text-base font-bold text-slate-700 mt-0.5">Subject: Computer Science</div>' +
+                  '</div>' +
+                '</div>' +
+
+                '<div class="my-6 bg-slate-50/90 rounded-2xl p-5 border border-slate-200 max-w-xl mx-auto">' +
+                  '<h3 class="text-sm font-bold uppercase tracking-wider text-blue-800 mb-3 border-b border-slate-200 pb-1.5">Student Details:</h3>' +
+                  '<div class="space-y-2.5 text-sm sm:text-base">' +
+                    '<div class="flex items-baseline justify-between border-b border-dashed border-slate-300 pb-1.5">' +
+                      '<span class="font-bold text-slate-700">First Name:</span>' +
+                      '<span class="font-semibold text-slate-900">' + escapeHtml(state.firstName) + '</span>' +
+                    '</div>' +
+                    '<div class="flex items-baseline justify-between border-b border-dashed border-slate-300 pb-1.5">' +
+                      '<span class="font-bold text-slate-700">Full Name:</span>' +
+                      '<span class="font-semibold text-slate-900">' + escapeHtml(state.fullName) + '</span>' +
+                    '</div>' +
+                    '<div class="flex items-baseline justify-between border-b border-dashed border-slate-300 pb-1.5">' +
+                      '<span class="font-bold text-slate-700">Class &amp; Section:</span>' +
+                      '<span class="font-semibold text-slate-900">Class VI - ' + escapeHtml(state.section) + '</span>' +
+                    '</div>' +
+                    '<div class="flex items-baseline justify-between border-b border-dashed border-slate-300 pb-1.5">' +
+                      '<span class="font-bold text-slate-700">Roll Number:</span>' +
+                      '<span class="font-semibold text-slate-900">' + escapeHtml(state.rollNo) + '</span>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="mt-4 pt-2 flex items-baseline justify-between text-sm sm:text-base bg-blue-50/80 px-3.5 py-2 rounded-xl border border-blue-200">' +
+                    '<span class="font-bold text-blue-950">Submitted To:</span>' +
+                    '<span class="font-extrabold text-blue-900">' + escapeHtml(state.teacherName) + '</span>' +
+                  '</div>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 2,
+            badge: "Page 2 • Acknowledgement",
+            title: "Page 2: Acknowledgement",
+            checklistLabel: "Page 2: Acknowledgement (Teacher's Name, Signature, Date, Thank You Banner & Pen/Book)",
+            images: [
+              {
+                num: 1,
+                caption: '1. A decorative "Thank You" ribbon or banner.',
+                tip: 'Draw a curved horizontal scroll banner with folded ribbon ends and write "THANK YOU" in block letters inside.',
+                svg: svgIllustrations.p2_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A drawing of a pen and an open book.",
+                tip: "Draw two curved rectangles side-by-side for an open book with ruled lines, and add a slanted fountain pen resting across the right page.",
+                svg: svgIllustrations.p2_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<p>' +
+                    'I would like to express my special thanks to my Computer Science teacher, ' +
+                    '<strong class="text-blue-900 underline decoration-amber-400 decoration-2 underline-offset-4">' + escapeHtml(state.teacherName) + '</strong>, ' +
+                    'and our Principal for giving me the opportunity to do this project on ' +
+                    '<strong>"Internet - Online Surfing"</strong>.' +
+                  '</p>' +
+                  '<p>' +
+                    'This project helped me understand how the internet connects the world and how to stay safe from online threats like fake programs called ' +
+                    '<strong>Trojan Horses</strong>. I also thank my parents for their help in gathering the materials to complete this project.' +
+                  '</p>' +
+                  '<div class="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl">' +
+                    '<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">' +
+                      '<div class="text-xs font-bold uppercase text-slate-500 mb-1">Signature:</div>' +
+                      '<div class="font-handwriting text-xl text-blue-900 border-b-2 border-slate-400 pb-1 min-h-[32px]">' +
+                        escapeHtml(state.fullName) +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">' +
+                      '<div class="text-xs font-bold uppercase text-slate-500 mb-1">Date:</div>' +
+                      '<div class="font-semibold text-base text-slate-900 border-b-2 border-slate-400 pb-1 min-h-[32px]">' +
+                        escapeHtml(state.submissionDate) +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 3,
+            badge: "Page 3 • What is the Internet?",
+            title: "Page 3: What is the Internet?",
+            checklistLabel: "Page 3: What is the Internet? (YouTube Tablet & Smartphone showing G Pay)",
+            images: [
+              {
+                num: 1,
+                caption: "1. A tablet screen showing a YouTube video playing.",
+                tip: "Draw a horizontal tablet frame with a red YouTube play button triangle in the center and a red progress bar underneath.",
+                svg: svgIllustrations.p3_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A hand holding a smartphone showing the G Pay logo.",
+                tip: "Draw a vertical smartphone with fingers gripping the left edge, the colorful 'G Pay' logo at the top, and a green payment checkmark below.",
+                svg: svgIllustrations.p3_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<p>' +
+                    'The <strong>Internet</strong> is a global network that connects millions of computers and allows fast communication. Technology helps us complete tasks quickly and effortlessly.' +
+                  '</p>' +
+                  '<p>' +
+                    'People use the internet every day for many things, such as watching videos on <strong>YouTube</strong>, sending reels to friends, and paying someone easily using digital payment apps like <strong>G Pay</strong>.' +
+                  '</p>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 4,
+            badge: "Page 4 • Email and Cloud Storage",
+            title: "Page 4: Email and Cloud Storage",
+            checklistLabel: "Page 4: Email and Cloud Storage (Gmail Envelope Logo & Blue Cloud with Folder)",
+            images: [
+              {
+                num: 1,
+                caption: "1. The red and white Gmail envelope logo.",
+                tip: "Draw a rectangular white envelope with thick red borders on the left, right, and top V-flap to form the red letter 'M'.",
+                svg: svgIllustrations.p4_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A blue cloud with a digital file folder inside.",
+                tip: "Draw a fluffy sky-blue cloud and place a yellow rectangular file folder with a tab and upload arrow right in the center.",
+                svg: svgIllustrations.p4_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<p>' +
+                    'The internet offers many important applications like email and cloud storage.' +
+                  '</p>' +
+                  '<ul class="list-disc pl-6 space-y-3">' +
+                    '<li>' +
+                      '<strong>Email</strong> allows users to send messages and files instantly, and <strong>Gmail</strong> is a widely used service. An email address contains a username and a domain name.' +
+                    '</li>' +
+                    '<li>' +
+                      '<strong>Cloud storage</strong> lets users save files online and access them anytime. <strong>Google Drive</strong> is a popular cloud service for saving and sharing files.' +
+                    '</li>' +
+                  '</ul>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 5,
+            badge: "Page 5 • Online Shopping and Entertainment",
+            title: "Page 5: Online Shopping and Entertainment",
+            checklistLabel: "Page 5: Online Shopping and Entertainment (Digital Shopping Cart & Headphones with Mic)",
+            images: [
+              {
+                num: 1,
+                caption: "1. A digital shopping cart representing E-commerce.",
+                tip: "Draw a wheeled supermarket cart holding gift boxes/packages with a 'BUY NOW' tag above it.",
+                svg: svgIllustrations.p5_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A pair of headphones with a microphone representing Podcasts.",
+                tip: "Draw a curved headband with two ear-cups and a studio microphone on a stand in the middle with soundwaves.",
+                svg: svgIllustrations.p5_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<ul class="list-disc pl-6 space-y-3">' +
+                    '<li>' +
+                      '<strong>E-commerce</strong> allows buying and selling goods online through websites like <strong>Amazon</strong> and <strong>Flipkart</strong>. Online payments can be made using debit cards, credit cards, or net banking.' +
+                    '</li>' +
+                    '<li>' +
+                      '<strong>Blogs</strong> are online journals where people share ideas and experiences.' +
+                    '</li>' +
+                    '<li>' +
+                      '<strong>Podcasts</strong> are audio or video episodes that people can listen to or download.' +
+                    '</li>' +
+                  '</ul>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 6,
+            badge: "Page 6 • Cyber Threats – The Trojan Horse",
+            title: "Page 6: Cyber Threats – The Trojan Horse",
+            checklistLabel: "Page 6: Cyber Threats – The Trojan Horse (Orange Wooden Horse & Monitor with Skull/Warning)",
+            images: [
+              {
+                num: 1,
+                caption: "1. The ancient orange wooden horse on wheels.",
+                tip: "Draw a blocky wooden horse in orange/brown standing on a flat wooden board with two round spoked wheels underneath.",
+                svg: svgIllustrations.p6_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A computer monitor showing a red skull or a large warning sign (!).",
+                tip: "Draw a desktop computer screen displaying a red skull icon next to a yellow triangle warning sign with an exclamation mark (!).",
+                svg: svgIllustrations.p6_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<p>' +
+                    'In ancient history, the Greeks pretended to go home and left a big <strong>wooden horse</strong> outside Troy as a fake "gift". The people of Troy took it inside, but Greek soldiers were hiding inside the horse. At night, they came out and won the war.' +
+                  '</p>' +
+                  '<p>' +
+                    'In the same way, hackers today send fake software that looks real and safe. When people install it, hackers can enter the computer and steal data. These fake programs are called <strong>"Trojan Horses"</strong>.' +
+                  '</p>' +
+                '</div>'
+              );
+            }
+          },
+          {
+            pageNum: 7,
+            badge: "Page 7 • Safe Online Surfing",
+            title: "Page 7: Safe Online Surfing",
+            checklistLabel: "Page 7: Safe Online Surfing (Green Security Shield & Golden Padlock)",
+            images: [
+              {
+                num: 1,
+                caption: "1. A green Security Shield with a white checkmark inside it.",
+                tip: "Draw a classic crest shield colored bright green with a thick white tick/checkmark in the middle.",
+                svg: svgIllustrations.p7_img1()
+              },
+              {
+                num: 2,
+                caption: "2. A golden padlock representing data safety.",
+                tip: "Draw a rounded yellow/gold rectangle for the lock body, an arch on top for the metal loop, and a keyhole in the center.",
+                svg: svgIllustrations.p7_img2()
+              }
+            ],
+            renderBody: function() {
+              return (
+                '<div class="space-y-4 text-slate-800 leading-relaxed text-base sm:text-lg">' +
+                  '<p>' +
+                    'We should always be careful of online tricks and fake software. To stay safe on the internet, we must always practice good <strong>Netiquette</strong>.' +
+                  '</p>' +
+                  '<p>' +
+                    '<strong>Netiquette</strong> means using polite, safe, and responsible behaviour online. We should never share our passwords, always speak respectfully to others, and avoid downloading unknown files.' +
+                  '</p>' +
+                '</div>'
+              );
+            }
+          }
+        ];
+      }
+
+      // ==========================================
+      // RENDERING THE 7 A4 PROJECT PAGES
+      // ==========================================
+      function renderPages() {
+        var pages = getPagesData();
+        var container = document.getElementById("a4PagesContainer");
+        var pillsContainer = document.getElementById("pagePillsContainer");
+        if (!container || !pillsContainer) return;
+
+        // Render Page Selector Pills
+        var pillsHtml = '';
+        var allActive = state.selectedPage === 0;
+        pillsHtml += '<button type="button" data-page-select="0" class="page-pill px-3 py-1.5 rounded-lg text-xs font-bold transition ' +
+          (allActive ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200') + '">' +
+          '📚 All 7 Pages' +
+        '</button>';
+
+        for (var i = 0; i < pages.length; i++) {
+          var p = pages[i];
+          var isAct = state.selectedPage === p.pageNum;
+          var isDone = !!state.checkedPages[p.pageNum];
+          pillsHtml += '<button type="button" data-page-select="' + p.pageNum + '" class="page-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1 ' +
+            (isAct ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200') + '">' +
+            '<span>Page ' + p.pageNum + '</span>' +
+            (isDone ? '<span class="text-emerald-400">✓</span>' : '') +
+          '</button>';
+        }
+        pillsContainer.innerHTML = pillsHtml;
+
+        // Update Prev / Next Indicator
+        var indicator = document.getElementById("pageIndicatorText");
+        var btnPrev = document.getElementById("btnPrevPage");
+        var btnNext = document.getElementById("btnNextPage");
+        if (indicator) {
+          indicator.textContent = state.selectedPage === 0 ? "Showing All 7 Pages" : ("Page " + state.selectedPage + " of 7");
+        }
+        if (btnPrev) btnPrev.disabled = (state.selectedPage === 1);
+        if (btnNext) btnNext.disabled = (state.selectedPage === 7);
+
+        // Apply Sketch Mode class on container
+        if (state.sketchMode) {
+          container.classList.add("sketch-mode");
+        } else {
+          container.classList.remove("sketch-mode");
+        }
+
+        // Render A4 Sheets
+        var sheetsHtml = '';
+        for (var j = 0; j < pages.length; j++) {
+          var page = pages[j];
+          var hiddenOnScreen = (state.selectedPage !== 0 && state.selectedPage !== page.pageNum);
+          var visibilityClass = hiddenOnScreen ? "hidden print-only-all-pages" : "block";
+          var fontClass = state.handwritingFont ? "font-handwriting" : "";
+          var linedClass = state.ruledLines ? "a4-sheet-lined" : "";
+          var isChecked = !!state.checkedPages[page.pageNum];
+
+          sheetsHtml +=
+            '<article class="a4-sheet ' + visibilityClass + ' ' + linedClass + ' p-6 sm:p-10 md:pl-16" data-page-card="' + page.pageNum + '">' +
+              '<!-- Left Side Loose A4 Punch Holes & Colorful Lace/Ribbon Binding -->' +
+              '<div class="hidden md:flex flex-col items-center justify-between absolute left-4 top-16 bottom-16 pointer-events-none select-none">' +
+                '<div class="punch-hole"></div>' +
+                '<!-- Ribbon Lace Connecting the Holes -->' +
+                '<div class="w-2.5 flex-1 my-1 rounded-full shadow-sm" style="background-color: ' + state.ribbonColor + ';"></div>' +
+                '<div class="punch-hole"></div>' +
+                '<div class="w-2.5 flex-1 my-1 rounded-full shadow-sm" style="background-color: ' + state.ribbonColor + ';"></div>' +
+                '<div class="punch-hole"></div>' +
+              '</div>' +
+
+              '<!-- Top Sheet Header Bar (No-print controls + Page Number) -->' +
+              '<div class="flex flex-wrap items-center justify-between gap-2 mb-5 pb-3 border-b border-slate-200">' +
+                '<span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-50 text-blue-800 border border-blue-200">' +
+                  escapeHtml(page.badge) +
+                '</span>' +
+                '<div class="flex items-center gap-2 no-print">' +
+                  '<button type="button" data-toggle-done="' + page.pageNum + '" class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition ' +
+                    (isChecked
+                      ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                      : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200') + '">' +
+                    (isChecked ? '✓ Page Completed' : '○ Mark Page Done') +
+                  '</button>' +
+                '</div>' +
+              '</div>' +
+
+              '<!-- Page Heading (Pages 2 to 7 have explicit blue headings in PDF) -->' +
+              (page.pageNum > 1
+                ? '<h2 class="text-xl sm:text-2xl font-extrabold text-blue-700 mb-5">' + escapeHtml(page.title) + '</h2>'
+                : '') +
+
+              '<!-- Main Written Content of the Page -->' +
+              '<div class="' + fontClass + '">' +
+                page.renderBody() +
+              '</div>' +
+
+              '<!-- Images Section for this Page (Draw or Paste) -->' +
+              '<div class="mt-8 pt-5 border-t-2 border-dashed border-slate-200">' +
+                '<div class="flex items-center justify-between flex-wrap gap-2 mb-4">' +
+                  '<div class="flex items-center gap-2 text-sm font-bold text-slate-700 italic">' +
+                    '<span>🎨 Images for this page (Draw or Paste):</span>' +
+                  '</div>' +
+                  '<span class="text-xs text-slate-400 no-print">' +
+                    (state.sketchMode ? '✏️ Pencil Outline Mode (Easy to copy/trace)' : '🌈 Full Color Mode (Ready to print/paste)') +
+                  '</span>' +
+                '</div>' +
+
+                '<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">' +
+                  page.images.map(function(img) {
+                    return (
+                      '<div class="svg-card-bg rounded-2xl p-4 bg-slate-50/90 border-2 border-slate-200 flex flex-col justify-between">' +
+                        '<div class="bg-white rounded-xl p-3 border border-slate-100 shadow-inner flex items-center justify-center">' +
+                          img.svg +
+                        '</div>' +
+                        '<div class="mt-3">' +
+                          '<p class="text-xs sm:text-sm font-bold text-slate-800 text-center">' +
+                            escapeHtml(img.caption) +
+                          '</p>' +
+                          (state.showDrawingTips
+                            ? '<div class="mt-2 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 no-print">' +
+                                '<strong>✏️ Drawing Tip:</strong> ' + escapeHtml(img.tip) +
+                              '</div>'
+                            : '') +
+                        '</div>' +
+                      '</div>'
+                    );
+                  }).join("") +
+                '</div>' +
+              '</div>' +
+
+              '<!-- Bottom A4 Sheet Footer -->' +
+              '<div class="mt-8 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">' +
+                '<span>' + escapeHtml(state.schoolName) + ' • Class VI Computer Science</span>' +
+                '<span>Page ' + page.pageNum + ' of 7</span>' +
+              '</div>' +
+            '</article>';
+        }
+
+        container.innerHTML = sheetsHtml;
+      }
+
+      // ==========================================
+      // RENDER CHECKLIST IN ASSEMBLY GUIDE
+      // ==========================================
+      function renderChecklist() {
+        var pages = getPagesData();
+        var listEl = document.getElementById("checklistItemsContainer");
+        var progEl = document.getElementById("checklistProgressText");
+        if (!listEl || !progEl) return;
+
+        var doneCount = 0;
+        var html = '';
+        for (var i = 0; i < pages.length; i++) {
+          var p = pages[i];
+          var checked = !!state.checkedPages[p.pageNum];
+          if (checked) doneCount++;
+          html +=
+            '<div class="flex items-center justify-between gap-3 p-3 rounded-xl border transition ' +
+              (checked ? 'bg-emerald-50/60 border-emerald-200' : 'bg-slate-50 border-slate-200') + '">' +
+              '<label class="flex items-center gap-3 cursor-pointer flex-1 select-none">' +
+                '<input type="checkbox" data-check-page="' + p.pageNum + '" ' + (checked ? 'checked' : '') +
+                  ' class="w-4 h-4 rounded text-emerald-600 focus:ring-0" />' +
+                '<span class="text-xs sm:text-sm font-semibold ' + (checked ? 'line-through text-slate-500' : 'text-slate-800') + '">' +
+                  escapeHtml(p.checklistLabel) +
+                '</span>' +
+              '</label>' +
+              '<button type="button" data-jump-page="' + p.pageNum + '" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-white border border-slate-300 hover:bg-slate-100 text-slate-700">' +
+                'View Page ' + p.pageNum + ' →' +
+              '</button>' +
+            '</div>';
+        }
+        listEl.innerHTML = html;
+        progEl.textContent = doneCount + " of 7 Pages Completed";
+      }
+
+      // ==========================================
+      // INTERACTIVE LAB & VIVA QUIZ DATA
+      // ==========================================
+      var quizData = [
+        {
+          id: "q1",
+          pageRef: "Page 3",
+          question: "1. What is the Internet?",
+          options: [
+            "A global network that connects millions of computers and allows fast communication",
+            "A single offline computer inside a classroom",
+            "A type of printer cable"
+          ],
+          correct: 0
+        },
+        {
+          id: "q2",
+          pageRef: "Page 3",
+          question: "2. Which digital payment app is mentioned on Page 3 for paying someone easily?",
+          options: [
+            "Photoshop",
+            "G Pay (Google Pay)",
+            "MS Paint"
+          ],
+          correct: 1
+        },
+        {
+          id: "q3",
+          pageRef: "Page 4",
+          question: "3. Which two parts does every email address contain?",
+          options: [
+            "A home address and a pin code",
+            "A username and a domain name",
+            "A browser and a keyboard"
+          ],
+          correct: 1
+        },
+        {
+          id: "q4",
+          pageRef: "Page 4",
+          question: "4. Which popular cloud storage service is used for saving and sharing files online?",
+          options: [
+            "Google Drive",
+            "Calculator",
+            "Recycle Bin"
+          ],
+          correct: 0
+        },
+        {
+          id: "q5",
+          pageRef: "Page 6",
+          question: "5. What are fake programs that look safe but let hackers enter a computer and steal data called?",
+          options: [
+            "Trojan Horses",
+            "Podcasts",
+            "E-commerce"
+          ],
+          correct: 0
+        },
+        {
+          id: "q6",
+          pageRef: "Page 7",
+          question: "6. What does 'Netiquette' mean on Page 7?",
+          options: [
+            "Sharing passwords with strangers online",
+            "Using polite, safe, and responsible behaviour online",
+            "Downloading unknown files from pop-up ads"
+          ],
+          correct: 1
+        }
+      ];
+
+      function renderQuiz() {
+        var grid = document.getElementById("quizQuestionsGrid");
+        var scoreBadge = document.getElementById("quizScoreBadge");
+        if (!grid || !scoreBadge) return;
+
+        var score = 0;
+        var html = '';
+        for (var i = 0; i < quizData.length; i++) {
+          var q = quizData[i];
+          var userAns = state.quizAnswers[q.id];
+          var hasAnswered = typeof userAns === "number";
+          if (hasAnswered && userAns === q.correct) score++;
+
+          html +=
+            '<div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">' +
+              '<div>' +
+                '<div class="flex items-center justify-between text-xs text-slate-500 mb-1">' +
+                  '<span class="font-bold text-blue-700">' + escapeHtml(q.pageRef) + '</span>' +
+                  (hasAnswered
+                    ? (userAns === q.correct
+                        ? '<span class="font-bold text-emerald-600">✓ Correct!</span>'
+                        : '<span class="font-bold text-rose-600">✖ Try again</span>')
+                    : '<span>Select an answer</span>') +
+                '</div>' +
+                '<h4 class="font-bold text-sm text-slate-900 mb-3">' + escapeHtml(q.question) + '</h4>' +
+                '<div class="space-y-1.5">';
+
+          for (var optIdx = 0; optIdx < q.options.length; optIdx++) {
+            var optText = q.options[optIdx];
+            var btnStyle = "bg-white border-slate-200 text-slate-700 hover:border-blue-400";
+            if (hasAnswered) {
+              if (optIdx === q.correct) {
+                btnStyle = "bg-emerald-100 border-emerald-400 text-emerald-950 font-semibold";
+              } else if (optIdx === userAns && userAns !== q.correct) {
+                btnStyle = "bg-rose-100 border-rose-400 text-rose-950";
+              }
+            }
+            html +=
+              '<button type="button" data-quiz-q="' + q.id + '" data-quiz-opt="' + optIdx + '" ' +
+                'class="w-full text-left px-3 py-2 rounded-lg border text-xs sm:text-sm transition ' + btnStyle + '">' +
+                escapeHtml(optText) +
+              '</button>';
+          }
+
+          html += '</div></div></div>';
+        }
+
+        grid.innerHTML = html;
+        scoreBadge.textContent = "Score: " + score + " / " + quizData.length;
+      }
+
+      // ==========================================
+      // TAB SWITCHING & CONTROLS WIRING
+      // ==========================================
+      function switchTab(tabName) {
+        state.activeTab = tabName;
+        var vPages = document.getElementById("viewPages");
+        var vLab = document.getElementById("viewLab");
+        var vGuide = document.getElementById("viewGuide");
+
+        var bPages = document.getElementById("tabBtnPages");
+        var bLab = document.getElementById("tabBtnLab");
+        var bGuide = document.getElementById("tabBtnGuide");
+
+        vPages.classList.add("hidden");
+        vLab.classList.add("hidden");
+        vGuide.classList.add("hidden");
+
+        var inactiveCls = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white hover:bg-slate-700/60 whitespace-nowrap";
+        var activeCls = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm whitespace-nowrap";
+
+        bPages.className = inactiveCls;
+        bLab.className = inactiveCls;
+        bGuide.className = inactiveCls;
+
+        if (tabName === "pages") {
+          vPages.classList.remove("hidden");
+          bPages.className = activeCls;
+        } else if (tabName === "lab") {
+          vLab.classList.remove("hidden");
+          bLab.className = activeCls;
+        } else if (tabName === "guide") {
+          vGuide.classList.remove("hidden");
+          bGuide.className = activeCls;
+        }
+        saveState();
+      }
+
+      function syncInputsFromState() {
+        document.getElementById("inputSchool").value = state.schoolName;
+        document.getElementById("inputFirstName").value = state.firstName;
+        document.getElementById("inputFullName").value = state.fullName;
+        document.getElementById("inputSection").value = state.section;
+        document.getElementById("inputRollNo").value = state.rollNo;
+        document.getElementById("inputTeacher").value = state.teacherName;
+        document.getElementById("inputDate").value = state.submissionDate;
+        document.getElementById("chkRuledLines").checked = !!state.ruledLines;
+
+        // Style toggle buttons
+        var btnColor = document.getElementById("btnStyleColor");
+        var btnSketch = document.getElementById("btnStyleSketch");
+        if (state.sketchMode) {
+          btnSketch.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white";
+          btnColor.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white";
+        } else {
+          btnColor.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white";
+          btnSketch.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white";
+        }
+
+        // Font toggle buttons
+        var btnClean = document.getElementById("btnFontClean");
+        var btnHand = document.getElementById("btnFontHand");
+        if (state.handwritingFont) {
+          btnHand.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white";
+          btnClean.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white";
+        } else {
+          btnClean.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white";
+          btnHand.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:text-white";
+        }
+
+        // Drawing tips button
+        var btnTips = document.getElementById("btnToggleHowToDraw");
+        if (btnTips) {
+          btnTips.textContent = state.showDrawingTips ? "💡 Hide Drawing Tips" : "💡 Show Drawing Tips";
+        }
+      }
+
+      // Initialize Event Listeners
+      function initEvents() {
+        // Main Tabs
+        document.getElementById("tabBtnPages").addEventListener("click", function() { switchTab("pages"); });
+        document.getElementById("tabBtnLab").addEventListener("click", function() { switchTab("lab"); });
+        document.getElementById("tabBtnGuide").addEventListener("click", function() { switchTab("guide"); });
+
+        // Customizer drawer toggle
+        document.getElementById("btnToggleCustomizer").addEventListener("click", function() {
+          var drawer = document.getElementById("customizerDrawer");
+          drawer.classList.toggle("hidden");
+        });
+
+        // Print Button
+        document.getElementById("btnPrintProject").addEventListener("click", function() {
+          switchTab("pages");
+          window.print();
+        });
+
+        // Reset Defaults
+        document.getElementById("btnResetDefaults").addEventListener("click", function() {
+          state.schoolName = "Jibreel International School";
+          state.firstName = "Asfar";
+          state.fullName = "Asfar Jawed";
+          state.section = "A";
+          state.rollNo = "12";
+          state.teacherName = "Mr. Tauqeer Khan";
+          state.submissionDate = "02/11/2026";
+          state.sketchMode = false;
+          state.handwritingFont = false;
+          state.ruledLines = false;
+          state.ribbonColor = "#e11d48";
+          syncInputsFromState();
+          renderPages();
+          saveState();
+          showToast("Reset student details to defaults!");
+        });
+
+        // Live text inputs
+        var inputMap = [
+          { id: "inputSchool", key: "schoolName" },
+          { id: "inputFirstName", key: "firstName" },
+          { id: "inputFullName", key: "fullName" },
+          { id: "inputSection", key: "section" },
+          { id: "inputRollNo", key: "rollNo" },
+          { id: "inputTeacher", key: "teacherName" },
+          { id: "inputDate", key: "submissionDate" }
+        ];
+        inputMap.forEach(function(item) {
+          var el = document.getElementById(item.id);
+          if (el) {
+            el.addEventListener("input", function(e) {
+              state[item.key] = e.target.value;
+              renderPages();
+              saveState();
+            });
           }
         });
 
-        ready = true;
-        updateGlobalStatus("ONLINE", "System operational.", 100);
-        input.disabled = false;
-        sendBtn.disabled = false;
-        input.focus();
-      } catch (error) {
-        console.error(error);
-        updateGlobalStatus("OFFLINE", "Core execution failure.", 0);
-        addMsg("ApexAI engine could not initialize. WebGPU runtime compile target error.", "bot error");
-      }
-    }
-
-    async function sendMessage() {
-      const text = input.value.trim();
-      if (!text || !ready || generating) return;
-
-      generating = true;
-      input.value = "";
-      const isMobile = window.innerWidth <= 768;
-      input.style.height = isMobile ? "20px" : "26px";
-      input.disabled = true;
-      sendBtn.disabled = true;
-
-      addMsg(text, "user");
-      messages.push({ role: "user", content: text });
-      saveChat();
-
-      const botDiv = addMsg("Computing sequence...", "bot");
-
-      const chatMessages = [
-        {
-          role: "system",
-          content: "You are ApexAI, a professional and highly optimized analytical intelligence agent. Provide precise, clean solutions."
-        },
-        ...messages.slice(-10)
-      ];
-
-      try {
-        let reply = "";
-        const chunks = await engine.chat.completions.create({
-          messages: chatMessages,
-          stream: true,
-          temperature: 0.4
+        // Image style buttons
+        document.getElementById("btnStyleColor").addEventListener("click", function() {
+          state.sketchMode = false;
+          syncInputsFromState();
+          renderPages();
+          saveState();
+          showToast("Switched to Full Color illustrations");
+        });
+        document.getElementById("btnStyleSketch").addEventListener("click", function() {
+          state.sketchMode = true;
+          syncInputsFromState();
+          renderPages();
+          saveState();
+          showToast("Switched to Pencil Outline mode for easy drawing!");
         });
 
-        for await (const chunk of chunks) {
-          reply += chunk.choices[0]?.delta?.content || "";
-          botDiv.innerHTML = marked.parse(reply) || "Processing...";
-          scrollBottom();
+        // Font style buttons
+        document.getElementById("btnFontClean").addEventListener("click", function() {
+          state.handwritingFont = false;
+          syncInputsFromState();
+          renderPages();
+          saveState();
+        });
+        document.getElementById("btnFontHand").addEventListener("click", function() {
+          state.handwritingFont = true;
+          syncInputsFromState();
+          renderPages();
+          saveState();
+        });
+
+        // Ruled lines checkbox
+        document.getElementById("chkRuledLines").addEventListener("change", function(e) {
+          state.ruledLines = e.target.checked;
+          renderPages();
+          saveState();
+        });
+
+        // Drawing tips toggle
+        document.getElementById("btnToggleHowToDraw").addEventListener("click", function() {
+          state.showDrawingTips = !state.showDrawingTips;
+          syncInputsFromState();
+          renderPages();
+          saveState();
+        });
+
+        // Ribbon swatches
+        var swatches = document.querySelectorAll(".ribbon-swatch");
+        for (var s = 0; s < swatches.length; s++) {
+          swatches[s].addEventListener("click", function(e) {
+            var color = e.currentTarget.getAttribute("data-ribbon");
+            if (color) {
+              state.ribbonColor = color;
+              for (var k = 0; k < swatches.length; k++) {
+                swatches[k].classList.remove("ring-2", "ring-white", "opacity-100");
+                swatches[k].classList.add("opacity-70");
+              }
+              e.currentTarget.classList.remove("opacity-70");
+              e.currentTarget.classList.add("ring-2", "ring-white", "opacity-100");
+              renderPages();
+              saveState();
+              showToast("Updated ribbon binding color!");
+            }
+          });
         }
 
-        const finalReply = reply.trim() || "No return value received from local stack compiler loop.";
-        botDiv.innerHTML = marked.parse(finalReply);
+        // Prev / Next Page buttons
+        document.getElementById("btnPrevPage").addEventListener("click", function() {
+          if (state.selectedPage === 0) {
+            state.selectedPage = 1;
+          } else if (state.selectedPage > 1) {
+            state.selectedPage--;
+          }
+          renderPages();
+          saveState();
+        });
+        document.getElementById("btnNextPage").addEventListener("click", function() {
+          if (state.selectedPage === 0) {
+            state.selectedPage = 1;
+          } else if (state.selectedPage < 7) {
+            state.selectedPage++;
+          }
+          renderPages();
+          saveState();
+        });
 
-        messages.push({ role: "assistant", content: finalReply });
-        saveChat();
-      } catch (error) {
-        console.error(error);
-        botDiv.classList.add("error");
-        botDiv.textContent = "Execution loop interrupted unexpectedly. Re-submit query parameters.";
-      } finally {
-        generating = false;
-        input.disabled = false;
-        sendBtn.disabled = false;
-        input.focus();
-        scrollBottom();
+        // Delegated clicks for Page Pills & Mark Page Done
+        document.getElementById("pagePillsContainer").addEventListener("click", function(e) {
+          var btn = e.target.closest("[data-page-select]");
+          if (btn) {
+            state.selectedPage = parseInt(btn.getAttribute("data-page-select"), 10) || 0;
+            renderPages();
+            saveState();
+          }
+        });
+
+        document.getElementById("a4PagesContainer").addEventListener("click", function(e) {
+          var doneBtn = e.target.closest("[data-toggle-done]");
+          if (doneBtn) {
+            var pNum = parseInt(doneBtn.getAttribute("data-toggle-done"), 10);
+            state.checkedPages[pNum] = !state.checkedPages[pNum];
+            renderPages();
+            renderChecklist();
+            saveState();
+            showToast(state.checkedPages[pNum] ? ("Marked Page " + pNum + " as complete!") : ("Unmarked Page " + pNum));
+          }
+        });
+
+        // Delegated clicks in Checklist Guide
+        document.getElementById("checklistItemsContainer").addEventListener("change", function(e) {
+          var chk = e.target.closest("[data-check-page]");
+          if (chk) {
+            var pNum = parseInt(chk.getAttribute("data-check-page"), 10);
+            state.checkedPages[pNum] = chk.checked;
+            renderPages();
+            renderChecklist();
+            saveState();
+          }
+        });
+        document.getElementById("checklistItemsContainer").addEventListener("click", function(e) {
+          var jumpBtn = e.target.closest("[data-jump-page]");
+          if (jumpBtn) {
+            var pNum = parseInt(jumpBtn.getAttribute("data-jump-page"), 10);
+            state.selectedPage = pNum;
+            switchTab("pages");
+            renderPages();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        });
+
+        // Lab 1: Email Anatomy Explorer
+        var emailUser = document.getElementById("emailUserPart");
+        var emailDom = document.getElementById("emailDomainPart");
+        function updateEmailPreview() {
+          var u = (emailUser.value || "student").trim().replace(/\s+/g, ".");
+          var d = emailDom.value || "gmail.com";
+          document.getElementById("dispEmailUser").textContent = u;
+          document.getElementById("dispEmailDomain").textContent = d;
+        }
+        emailUser.addEventListener("input", updateEmailPreview);
+        emailDom.addEventListener("change", updateEmailPreview);
+
+        document.getElementById("btnSimulateCloudSave").addEventListener("click", function() {
+          showToast("Backed up 'Internet_Online_Surfing_Project.pdf' to Google Drive Cloud!", "☁️");
+        });
+
+        // Lab 2: Trojan Horse Scanner
+        var trojanResults = [
+          {
+            safe: false,
+            text: "🚨 DANGER (TROJAN HORSE DETECTED!): 'Free_99999_Game_Coins_Generator.exe' pretends to be a free prize gift, just like the Wooden Horse of Troy! Installing it lets hackers steal your passwords."
+          },
+          {
+            safe: true,
+            text: "✅ SAFE FILE: 'Class_VI_Computer_Notes.pdf' is a verified document shared by your teacher Mr. Tauqeer Khan on Google Drive."
+          },
+          {
+            safe: false,
+            text: "🚨 DANGER (TROJAN HORSE DETECTED!): Never download unknown '.zip' files or enter your password into unverified pop-up software!"
+          }
+        ];
+        document.getElementById("trojanFilesList").addEventListener("click", function(e) {
+          var item = e.target.closest(".trojan-item");
+          if (!item) return;
+          var idx = parseInt(item.getAttribute("data-file-id"), 10);
+          var info = trojanResults[idx];
+          var resBox = document.getElementById("trojanScanResult");
+          var badge = item.querySelector(".scan-badge");
+          if (info && resBox) {
+            resBox.textContent = info.text;
+            resBox.className = "mt-4 p-3.5 rounded-xl text-xs sm:text-sm font-semibold " +
+              (info.safe ? "bg-emerald-900 text-emerald-100 border border-emerald-600" : "bg-rose-950 text-rose-100 border border-rose-600");
+            if (badge) {
+              badge.textContent = info.safe ? "✓ Safe" : "⚠️ Trojan!";
+              badge.className = "scan-badge text-xs font-bold px-2.5 py-1 rounded-full " +
+                (info.safe ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800");
+            }
+          }
+        });
+
+        // Lab 3: Quiz Interactions
+        document.getElementById("quizQuestionsGrid").addEventListener("click", function(e) {
+          var btn = e.target.closest("[data-quiz-q]");
+          if (!btn) return;
+          var qId = btn.getAttribute("data-quiz-q");
+          var optIdx = parseInt(btn.getAttribute("data-quiz-opt"), 10);
+          state.quizAnswers[qId] = optIdx;
+          renderQuiz();
+          saveState();
+        });
+        document.getElementById("btnResetQuiz").addEventListener("click", function() {
+          state.quizAnswers = {};
+          renderQuiz();
+          saveState();
+          showToast("Quiz reset! Try answering all 6 questions.");
+        });
       }
-    }
 
-    function addMsg(text, cls) {
-      const welcomeContainer = document.getElementById("welcome");
-      if (welcomeContainer) welcomeContainer.remove();
-
-      const div = document.createElement("div");
-      div.className = `msg ${cls}`;
-      
-      if(cls === "user") {
-         div.textContent = text;
-      } else {
-         div.innerHTML = marked.parse(text);
-      }
-
-      chatbox.appendChild(div);
-      scrollBottom();
-      return div;
-    }
-
-    function renderStoredMessages() {
-      if (!messages.length) return;
-      const welcomeContainer = document.getElementById("welcome");
-      if (welcomeContainer) welcomeContainer.remove();
-
-      for (const message of messages) {
-        addMsg(message.content, message.role === "user" ? "user" : "bot");
-      }
-    }
-
-    function loadChat() {
-      try {
-        return JSON.parse(localStorage.getItem("apexai-unified-chat") || "[]");
-      } catch {
-        return [];
-      }
-    }
-
-    function saveChat() {
-      localStorage.setItem("apexai-unified-chat", JSON.stringify(messages.slice(-40)));
-    }
-
-    // Function updates UI elements for both screen modes simultaneously
-    function updateGlobalStatus(label, detail, percent) {
-      statusLabels.forEach(el => el.textContent = label);
-      statusDetails.forEach(el => el.textContent = detail);
-      progressBars.forEach(el => el.style.width = `${percent}%`);
-    }
-
-    function scrollBottom() {
-      chatbox.scrollTop = chatbox.scrollHeight;
-    }
+      // Boot Application
+      syncInputsFromState();
+      renderPages();
+      renderChecklist();
+      renderQuiz();
+      switchTab(state.activeTab || "pages");
+      initEvents();
+    })();
   </script>
 </body>
 </html>
